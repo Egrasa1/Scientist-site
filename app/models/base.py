@@ -1,11 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 
 
 
 engine = create_engine('sqlite:///test.db',echo=True)
-#Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind = engine)
+session = Session()
 
 
 
