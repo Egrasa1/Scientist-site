@@ -1,38 +1,69 @@
-from app.models import Post
+from datetime import datetime
+from sqlalchemy.orm import Session
+from app.models.posts import Post
+from app.models.users import User  # Для перевірки зв'язків
 
-class PostController:
-    @staticmethod
-    def get_post_by_user(user_id: int):
-        return Post.query.filter_by(user_id=user_id).all()
-    
-    @staticmethod
-    def check_posts(user_id: int):
-        return Post.query.filter_by(user_id=user_id).first()
-    
-    @staticmethod
-    def get_post_by_id(post_id: int):
-        return Post.query.filter_by(id=post_id).first()
-    
-    @staticmethod
-    def create_post(title: str, content: str, user_id: int, image: str = None):
-        post = Post(
-            title=title,
-            content=content,
-            image=image,
-            user_id=user_id,
-        )
-        post.save()
+# --- CREATE ---
+def create_post(db: Session, user_id: int, title: str, content: str) -> Post:
+    new_post = Post(
+        user_id=user_id,
+        title=title,
+        content=content,
+        create_date=datetime.utcnow()
+    )
+    db.add(new_post)
+    db.commit()
+    db.refresh(new_post)
+    return new_post
 
-    @staticmethod
-    def delete_post(post_id: int):
-        post = Post.query.get(post_id)
-        if post:
-            post.delete()
+# --- READ ---
+def get_post_by_id(db: Session, post_id: int) -> Post:
 
-    @staticmethod
-    def update_post(post_id: int, title: str, content: str):
-        post = Post.query.get(post_id)
-        if post:
-            post.title = title
-            post.content = content
-            post.save()
+    return db.query(Post).filter(Post.id == post_id).first()
+
+def get_posts_by_user(db: Session, user_id: int, skip: int = 0, limit: int = 100) -> list[Post]:
+    return db.query(Post).filter(Post.user_id == user_id).offset(skip).limit(limit).all()
+
+def get_all_posts(db: Session, skip: int = 0, limit: int = 100) -> list[Post]:
+    """
+    Отримання всіх постів (з пагінацією)
+    """
+    return db.query(Post).offset(skip).limit(limit).all()
+
+# --- UPDATE ---
+def update_post_content(db: Session, post_id: int, new_content: str) -> Post:
+
+    post = db.query(Post).filter(Post.id == post_id).first()
+    if post:
+        post.content = new_content
+        db.commit()
+        db.refresh(post)
+    return post
+
+def update_post_title(db: Session, post_id: int, new_title: str) -> Post:
+
+    post = db.query(Post).filter(Post.id == post_id).first()
+    if post:
+        post.title = new_title
+        db.commit()
+        db.refresh(post)
+    return post
+
+# --- DELETE ---
+def delete_post(db: Session, post_id: int) -> bool:
+    post = db.query(Post).filter(Post.id == post_id).first()
+    if post:
+        db.delete(post)
+        db.commit()
+        return True
+    return False
+
+def get_post_with_author(db: Session, post_id: int) -> dict:
+    post = db.query(Post).filter(Post.id == post_id).first()
+    if post:
+        author = db.query(User).filter(User.id == post.user_id).first()
+        return {
+            "post": post,
+            "author": author
+        }
+    return None
