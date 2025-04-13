@@ -9,8 +9,6 @@ engine = create_engine('sqlite:///test.db',echo=True)
 Session = sessionmaker(bind = engine)
 session = Session()
 
-
-
 class Base(DeclarativeBase):
     pass
 

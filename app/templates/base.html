@@ -6,6 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form action="{{ url_for('register') }}" method="POST">
+        {{ register_form.hidden_tag() }}
+        {{ register_form.name(placeholder='Ім’я користувача') }}
+        {{ register_form.email(placeholder='Email') }}
+        {{ register_form.password(placeholder='Пароль') }}
+        {{ register_form.confirm_password(placeholder='Підтвердження паролю') }}
+        {{ register_form.submit(class='btn') }}
+    </form>
+
+    <form action="{{ url_for('login') }}" method="POST">
+        {{ login_form.hidden_tag() }}
+        {{ login_form.email(placeholder='Email') }}
+        {{ login_form.password(placeholder='Пароль') }}
+        {{ login_form.remember(placeholder="Запам'ятати мене") }}
+        {{ login_form.submit(class='btn') }}
+    </form>
 </body>
 </html>
