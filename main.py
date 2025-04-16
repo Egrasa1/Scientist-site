@@ -1,20 +1,15 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from app.models import create_db, drop_db
+from app import create_app, db, models
 
-import os
+app = create_app()
 
-
-app = Flask(__name__, template_folder='app/templates')
-app.secret_key= os.getenv('SECRET_KEY')
-
-create_db()
-
-
-from app.routes import *
-
-
+@app.shell_context_processor
+def get_context():
+    # Для змоги прописати в консолі 'flask shell'
+    # й сразу використовувати 
+    # - app (Flask додаток)
+    # - db (SQLAlchemy)
+    # - models (Доступ до всіх моделок)
+    return dict(app=app, db=db, models=models) 
 
 if __name__ == '__main__':
     app.run(debug=True)

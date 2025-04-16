@@ -1,30 +1,3 @@
-from flask import Flask, redirect, url_for, render_template
-from main import app
-from app.forms import SignUpForm, LoginForm, ProfileForm
+from flask import Blueprint
 
-
-
-@app.route("/", methods=["GET"])
-def base():
-    login_form = LoginForm()
-    register_form = SignUpForm()
-    return render_template("base.html", login_form=login_form, register_form=register_form)
-
-
-
-@app.route('/reg', methods=['POST'])
-def register():
-    register_form = SignUpForm()
-    if register_form.validate_on_submit():
-        return redirect(url_for('login'))
-    return render_template('base.html', register_form=register_form)
-
-
-
-@app.route('/log', methods=['POST'])
-def login():
-    login_form = LoginForm()
-    if login_form.validate_on_submit():
-        return redirect(url_for('login'))
-    return render_template('base.html', login_form=login_form)
-
+user_bp = Blueprint('user', __name__)

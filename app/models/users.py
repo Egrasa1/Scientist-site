@@ -1,8 +1,12 @@
-from sqlalchemy import Column, String, Integer, Enum
-from .base import Base
-from sqlalchemy.orm import relationship
 from sqlalchemy import Enum as SqlEnum
+from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
+
+from flask_login import AnonymousUserMixin
+
 from enum import Enum
+
+from .base import Base
 
 class RoleEnum(Enum):
     ADMIN = 'admin'
@@ -16,6 +20,9 @@ class User(Base):
     passwords = Column(String(60), nullable=False)
     email = Column(String(250), unique=True)
     role = Column(SqlEnum(RoleEnum, name="role_enum"), default=RoleEnum.USER, nullable=False)
+
+class AnonymousUser(AnonymousUserMixin):
+    pass
 
 posts = relationship('Post', back_populates='author')
 likes = relationship('Likes', back_populates='user')
