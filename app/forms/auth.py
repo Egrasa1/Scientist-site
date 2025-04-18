@@ -8,32 +8,20 @@ from config import sender_email, sender_password
 class SignUpForm(FlaskForm):
     name = StringField(
         'Нікнейм', 
-        validators=[
-            DataRequired(), 
-            Length(min=2, max=20)
-            ]
-        )
+        validators=[DataRequired(), Length(min=2, max=20)]
+    )
     email = StringField(
         'Email', 
-        validators=[
-            DataRequired(), 
-            Email()
-            ]
-        )
+        validators=[DataRequired(), Email()]
+    )
     password = PasswordField(
         'Пароль', 
-        validators=[
-            DataRequired(), 
-            Length(min=6)
-            ]
-        )
+        validators=[DataRequired(), Length(min=6)]
+    )
     confirm_password = PasswordField(
         'Підтвердження пароля', 
-        validators=[
-            DataRequired(), 
-            EqualTo('password')
-            ]
-        )
+        validators=[DataRequired(), EqualTo('password')]
+    )
     submit = SubmitField('Sign Up')
 
     def validate_email(self, email):
@@ -45,15 +33,12 @@ class SignUpForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField(
         'Email', 
-        validators=[
-            DataRequired(), 
-            Email()
-            ]
-        )
+        validators=[DataRequired(), Email()]
+    )
     password = PasswordField(
         'Пароль', 
         validators=[DataRequired()]
-        )
+    )
     remember = BooleanField('Запам\'ятати мене')
     submit = SubmitField('Login')
 
@@ -61,20 +46,14 @@ class LoginForm(FlaskForm):
 class ProfileForm(FlaskForm):
     name = StringField(
         'Нікнейм', 
-        validators=[
-            DataRequired(), 
-            Length(min=2, max=20)
-            ]
-        )
+        validators=[DataRequired(), Length(min=2, max=20)]
+    )
     email = StringField(
         'Email', 
-        validators=[
-            DataRequired(), 
-            Email()
-            ]
-        )
+        validators=[DataRequired(), Email()]
+    )
     password = PasswordField(
         'Пароль', 
         validators=[Length(min=6)]
-        )
+    )
     submit = SubmitField('Оновити')
