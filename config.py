@@ -1,5 +1,6 @@
 import os
-
+import smtplib
+from email.mime.text import MIMEText
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # Путь до папки в якой знаходиться нинешній файл
 
 class BaseConfig:
@@ -34,28 +35,21 @@ config = {
     "development": DevelopmentConfig,
     "production": ProductionConfig,
 }
-    
-    
+
+def send_welcome_email(user_email):
+        msg = MIMEText(body, "plain", "utf-8")
+        msg["Subject"] = subject
+        msg["From"] = sender
+        msg["To"] = user_email
+
+        try:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+                server.login(sender, password)
+                server.sendmail(sender, user_email, msg.as_string())
+                print("Email sent to", user_email)
+        except Exception as e:
+            print("Email send failed:", e)
 
 
-# from email.mime.multipart import MIMEMultipart
-# from email.mime.text import MIMEText
-# from email.mime.image import MIMEImage
-# sender_email = os.getenv('SENDER_EMAIL') 
-# sender_password = os.getenv('SENDER_PASSWORD')
 
-# def send_mail():
-#         subject = "Вітаємо з реєстрацією!"
-#         body = 'Вітаємо, ви зареєструвалися на нашому сайті з купою цікавих та захоплюючих новин. Сподіваємося ваш досвід користування нашим сайтом буде виключно позитивним'
 
-#         msg = MIMEMultipart()
-#         msg['From'] = sender_email
-#         msg['To'] = receiver_email
-#         msg['Subject'] = subject
-#         msg.attach(MIMEText(body, 'plain'))
-#         try:
-#             with smtplib.SMTP_SSL("smtp.ukr.net", 465) as server:
-#                 server.login(sender_email, sender_password)
-#                 server.sendmail(sender_email, receiver_email, msg.as_string())
-#         except smtplib.SMTPException:
-#             print("Error: unable to mail")
