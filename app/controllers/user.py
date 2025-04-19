@@ -54,3 +54,6 @@ class UserController:
             User.save()
             return True
         return False
+
+def send_welcome_email(email):
+    send_welcome_email(email)
