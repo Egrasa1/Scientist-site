@@ -1,11 +1,306 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Наукові новини - Вхід</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(67, 97, 238, 0.1) 50%,
+                transparent 100%
+            );
+            animation: rotate 6s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .auth-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .auth-header h2 {
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+
+        .auth-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .btn-primary:hover::after {
+            left: 100%;
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--dark);
+        }
+
+        .toggle-link {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .toggle-link:hover::after {
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.1);
+            z-index: -2;
+        }
+
+        .decoration-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+        }
+
+        .decoration-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -50px;
+        }
+    </style>
 </head>
 <body>
-    
+    <!-- Декоративні елементи -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+
+    <!-- Основна форма -->
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2 id="form-title">Ласкаво просимо</h2>
+        </div>
+
+        <div class="auth-body">
+            <!-- Форма входу -->
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" class="form-control" placeholder="Введіть ваш email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Пароль</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="Введіть ваш пароль" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Увійти</button>
+
+                <div class="toggle-form">
+                    <span>Ще не зареєстровані? </span>
+                    <span class="toggle-link" id="show-register">Створити акаунт</span>
+                </div>
+            </form>
+
+            <!-- Форма реєстрації -->
+            <form id="register-form" class="hidden">
+                <div class="form-group">
+                    <label for="reg-name">Ім'я</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="Введіть ваше ім'я" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" class="form-control" placeholder="Введіть ваш email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-password">Пароль</label>
+                    <input type="password" id="reg-password" class="form-control" placeholder="Створіть пароль (мін. 6 символів)" minlength="6" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Зареєструватися</button>
+
+                <div class="toggle-form">
+                    <span>Вже маєте акаунт? </span>
+                    <span class="toggle-link" id="show-login">Увійти</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        document.getElementById('show-register').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.remove('hidden');
+            document.getElementById('form-title').textContent = 'Реєстрація';
+        });
+
+        document.getElementById('show-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('form-title').textContent = 'Ласкаво просимо';
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Вхід успішний! Перенаправляємо...");
+            window.location.href = "main.html";
+        });
+
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Реєстрація успішна! Тепер увійдіть.");
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('form-title').textContent = 'Ласкаво просимо';
+        });
+        
+    </script>
 </body>
 </html>
