@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if title %} {{ title }} - {{ config.APP_NAME }} {{% else %}} {{ config.APP_NAME }} {% endif }</title>
-    {% block meta %} {% endif %}
+    <title>
+        {% if title %} {{ title }} - {{ config.APP_NAME }} {% else %} 
+        {{ config.APP_NAME }} {% endif %}
+    </title>
+    {% block meta %} {% endblock %}
 
     <link
-    href="{{ url_for('static', filename='styles/style.css')}}"
+    href="{{ url_for('static', filename='style/style.css')}}"
     rel="stylesheet"
     type="text/css"
     />
