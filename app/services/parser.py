@@ -1,14 +1,19 @@
 import requests
 import math
+import random
+
 from bs4 import BeautifulSoup
 
-
 def parser_science_news():
-    base_url = "https://naked-science.ru"
-    res = requests.get(f"{base_url}/community")
+    category = ['astronomy', 'cosmonautics', 'physics', 'chemistry', 'medicine', 'biology']
+    category_for_news = random.choice(category)
+    
+    base_url = "https://naked-science.ru/article"
+    res = requests.get(f"{base_url}/{category_for_news}")
     soup = BeautifulSoup(res.text, "html.parser")
 
-    articles = soup.select(".shesht-comment-template__pagelink a")
+    articles = soup.select(".news-item-title")
+    hrefs = [a.find("a")["href"] for a in articles if a.find("a")]
     news = []
 
     score_list = {
@@ -19,8 +24,7 @@ def parser_science_news():
         5: "Потрібно подивитися",
     }
 
-    for arti in articles:
-        href = arti.get('href')
+    for href in hrefs:
         if not href:
             continue
         try:

@@ -1,1 +1,1 @@
-from parser import parser_science_news
+from .parser import parser_science_news

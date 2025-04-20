@@ -6,8 +6,8 @@ def save_news(news):
     try:
         admin_user = User.query.filter_by(role='admin').first()
 
-        for news_item in news:
-            content = f"{news_item.get('lead', '')}\n\n{news_item.get('description', '')}"
+        for news_item in parser_science_news():
+            content = f"{news_item['lead']}\n\n{news_item.get('description', '')}"
 
             new_post = Post(
                 tittle=news_item.get('title', 'No title'),
