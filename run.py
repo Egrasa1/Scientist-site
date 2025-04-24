@@ -1,10 +1,27 @@
 import schedule
 import time
 import threading
-from app.services import parser_science_news
+import logging
+
+from app.controllers import savef_news
 from app import create_app, db, models
 
 app = create_app()
+
+def run_scheduler():
+    with app.app_context():
+        schedule.every(1).hours.do(run_with_context, savef_news)
+        # Для правильной роботи savef_news потрібен хоч один админ
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+            
+def run_with_context(job_func):
+    with app.app_context():
+        try:
+            job_func()
+        except Exception as e:
+            logging.error(f"Помилка в scheduled завданні: {str(e)}")
 
 @app.shell_context_processor
 def get_context():
@@ -15,14 +32,10 @@ def get_context():
     # - models (Доступ до всіх моделок)
     return dict(app=app, db=db, models=models)
 
-schedule.every(18).hours.do(parser_science_news)
-
-def run_scheduler():
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    
     scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
     scheduler_thread.start()
+    
     app.run(debug=True)

@@ -1,45 +1,41 @@
 {% extends "base.html" %} {% block content %}
-<div class="hero">
-    <h1>Наукові новини</h1>
-    <p>Свіжі дослідження та відкриття з усього світу</p>
+<div class="main-hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Наукові новини</h1>
+        <p class="hero-subtitle">Свіжі дослідження та відкриття з усього світу</p>
+    </div>
 </div>
 
-<div class="news-grid">
-    <div class="news-card">
-        <div class="card-image"></div>
-            <div class="card-content">
-                <h3 class="card-title">Заголовок новини</h3>
-                <p class="card-excerpt">Опис новини...</p>
-                <a href="#" class="read-more">Детальніше →</a>
-            </div>
-        </div>
-
-        <div class="news-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <h3 class="card-title">Заголовок новини</h3>
-                <p class="card-excerpt">Опис новини...</p>
-                <a href="#" class="read-more">Детальніше →</a>
-            </div>
-        </div>
-
-        <div class="news-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <h3 class="card-title">Заголовок новини</h3>
-                <p class="card-excerpt">Опис новини...</p>
-                <a href="#" class="read-more">Детальніше →</a>
-            </div>
-        </div>
-
-        <div class="news-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <h3 class="card-title">Заголовок новини</h3>
-                <p class="card-excerpt">Опис новини...</p>
-                <a href="#" class="read-more">Детальніше →</a>
-            </div>
-        </div>
+<div class="main-container">
+    <div class="main-background">
     </div>
+    {% if not hot_posts %}
+    <div class="empty-state">
+        <div class="empty-icon">(ᗒᗣᗕ)՞</div>
+        <h2 class="empty-title">WOOOOPS</h2>
+        <p class="empty-text">А нема...нема)) Горячих~ новин поки що нема</p>
+    </div>
+    {% else %}
+    <div class="news-grid">
+        {% for post in hot_posts | sort(attribute="created_at") %}
+        <div class="news-card">
+            <div class="card-image-container">
+                <img src="{{ post.image_url }}" alt="{{ post.title }}" class="card-image">
+            </div>
+            <div class="card-body">
+                <h3 class="card-title"> 🔥 🔥 {{ post.tittle }} 🔥 🔥 {{ post.rating }}</h3>
+                <p class="card-text">{{ post.content|truncate(120) }}</p>
+                <div class="card-footer">
+                    <a href="#" class="read-more">
+                        Детальніше 
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <span class="card-date">{{ post.create_date.strftime('%d.%m.%Y') }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,4 +1,94 @@
 <header>
-    <div class="logo">Egrasa</div>
-    <a href="login.html" class="login-btn">Увійти</a>
+    <div class="logo-container">
+        <img
+            class="team-logo"
+            src="{{ url_for('static', filename='images/logo.jpg') }}"
+            alt="Team-logo"
+        />
+        <span class="logo-text">Egrasa</span>
+    </div>
+    <nav class="main-nav">
+        <ul class="nav-list">
+            <li>
+                <a
+                  href="{{ url_for('main.index') }}"
+                  class="nav-link {{ 'active' if current_page == 'main.index' else '' }}"
+                >
+                  Головна
+                </a>
+            </li>
+            <li>
+                <a
+                  href="#"
+                  class="nav-link {{ 'active' if current_page == 'news.index' else '' }}"
+                >
+                  Новини
+                </a>
+            </li>
+            <li>
+                <a
+                  href="#"
+                  class="nav-link {{ 'active' if current_page == 'about.index' else '' }}"
+                >
+                  Про нас
+                </a>
+            </li>
+            <li>
+                <a
+                  href="#"
+                  class="nav-link {{ 'active' if current_page == 'contacts.index' else '' }}"
+                >
+                  Контакти
+                </a>
+            </li>
+            {% if current_user.is_authenticated %}
+            <li>
+                <a
+                href="#"
+                class="nav-link {{ 'active' if current_page == 'blog.index' else '' }}"
+                >
+                Блог
+                </a>
+            </li>
+            <li>
+                <a
+                href="#"
+                class="nav-link {{ 'active' if current_page == 'user.profile' else '' }}"
+                >
+                Профіль
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="header-actions">
+        {% if current_user.is_authenticated %}
+        <div class="user-menu">
+            <!-- Drop-down меня для користувача -->
+            <button class="user-avatar">
+                <img src="{{ current_user.avatar or url_for('static', filename='images/default-avatar.jpg') }}" alt="User Avatar">
+            </button>
+            <li>
+                <a class="dropdown-item" href="{{ url_for('auth.signout') }}"
+                  >Logout</a
+                >
+            </li>
+        </div>
+        {% else %}
+        <div class="auth-buttons">
+            <a 
+                href="{{ url_for('auth.login') }}" 
+                class="auth-btn login-btn"
+            >
+                Увійти
+            </a>
+            <a 
+                href="{{ url_for('auth.register') }}" 
+                class="auth-btn register-btn"
+            >
+                Зареєструватися
+            </a>
+        </div>
+        {% endif %}
+    </div>
 </header>

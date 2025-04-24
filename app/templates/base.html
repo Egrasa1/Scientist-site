@@ -23,14 +23,15 @@
 
     <link
         rel="icon"
-        type="image/x-icon"
-        href="{{url_for('static', filename='image/bibzian.jpg')}}"
+        href="{{url_for('static', filename='images/logo-site.jpg')}}"
     />
     {% block links %}{% endblock %}
 </head>
 <body>
     <!-- Header -->
     {% include 'common/header.html' %}
+    <!-- Flash Message -->
+    {% include 'common/message.html' %}
     <!-- Content -->
     {% block content %} {% endblock %}
     <!-- Footer -->

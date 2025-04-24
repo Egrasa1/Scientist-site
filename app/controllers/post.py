@@ -33,7 +33,12 @@ class PostController:
     @staticmethod
     def get_all_posts(skip: int = 0, limit: int = 100) -> list[Post]:
         return Post.query.offset(skip).limit(limit).all()
-
+    
+    @staticmethod
+    def get_post_by_rating(limit: int = 3) -> list[Post]:
+        return Post.query.filter_by(rating='Потрібно подивитися').limit(limit).all()
+            
+        
     @staticmethod
     def update_post_content(post_id: int, new_content: str) -> Post:
         post = Post.query.filter(Post.id == post_id).first()
@@ -43,14 +48,14 @@ class PostController:
             Post.refresh()
         return post
 
-    @staticmethod
-    def update_post_title(post_id: int, new_title: str) -> Post:
-        post = Post.query.filter(Post.id == post_id).first()
-        if post:
-            post.title = new_title
-            Post.save()
-            Post.refresh()
-        return post
+    # @staticmethod
+    # def update_post_title(post_id: int, new_title: str) -> Post:
+    #     post = Post.query.filter(Post.id == post_id).first()
+    #     if post:
+    #         post.title = new_title
+    #         Post.save()
+    #         Post.refresh()
+    #     return post
 
     @staticmethod
     def delete_post(post_id: int) -> bool:

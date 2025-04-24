@@ -1,18 +1,50 @@
 {% extends "base.html" %} {% block content %}
-<form action="{{ url_for('register') }}" method="POST">
-    {{ register_form.hidden_tag() }}
-    {{ register_form.name(placeholder='Ім’я користувача') }}
-    {{ register_form.email(placeholder='Email') }}
-    {{ register_form.password(placeholder='Пароль') }}
-    {{ register_form.confirm_password(placeholder='Підтвердження паролю') }}
-    {{ register_form.submit(class='btn') }}
-</form>
+<div class="auth-container">
+    <div class="auth-background">
+        <!-- Добавити задній фон -->
+    </div>
+    <div class="d-flex justify-content-center align-items-center auth-content">
+        <form 
+            action="{{ url_for('auth.register') }}" 
+            method="POST" 
+            role="form"
+            class="register-form p-5 rounded"
+        >
+            <div class="text-center mb-4">
+                <h1 class="fw-bold">Зареєструватися</h1>
+            </div>
 
-<form action="{{ url_for('login') }}" method="POST">
-    {{ login_form.hidden_tag() }}
-    {{ login_form.email(placeholder='Email') }}
-    {{ login_form.password(placeholder='Пароль') }}
-    {{ login_form.remember(placeholder="Запам'ятати мене") }}
-    {{ login_form.submit(class='btn') }}
-</form>
+            <div class="form-group mb-3">
+                {{ register_form.name.label(class="form-label") }}
+                {{ register_form.name(class="form-control") }}
+            </div>
+        
+            <div class="form-group mb-3">
+                {{ register_form.email.label(class="form-label") }}
+                {{ register_form.email(class="form-control") }}
+            </div>
+        
+            <div class="form-group mb-3">
+                {{ register_form.password.label(class="form-label") }}
+                {{ register_form.password(class="form-control") }}
+            </div>
+        
+            <div class="form-group mb-3">
+                {{ register_form.confirm_password.label(class="form-label") }}
+                {{ register_form.confirm_password(class="form-control") }}
+            </div>
+        
+            <div class="text-center">
+                {{ register_form.submit(class="btn btn-primary w-100 py-2") }}
+            </div>
+        
+            <div class="mt-4 text-center">
+                <p class="small">
+                    Вже маєте акаунт?
+                    <a href="{{ url_for('auth.login') }}" class="fw-bold">Увійти</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

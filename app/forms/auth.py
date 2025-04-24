@@ -1,3 +1,4 @@
+from flask import flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo
@@ -21,12 +22,12 @@ class SignUpForm(FlaskForm):
         'Підтвердження пароля', 
         validators=[DataRequired(), EqualTo('password')]
     )
-    submit = SubmitField('Sign Up')
+    submit = SubmitField('Зареєструватися')
 
-    def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
+    def validate_email(self, field):
+        user = User.query.filter_by(email=field.data).first()
         if user:
-            raise ValidationError('That email is already in use. Please choose a different one.')
+            flash('Ця електронна адреса вже використовується. Виберіть інший.')
         
 
 class LoginForm(FlaskForm):
@@ -39,7 +40,7 @@ class LoginForm(FlaskForm):
         validators=[DataRequired()]
     )
     remember = BooleanField('Запам\'ятати мене')
-    submit = SubmitField('Login')
+    submit = SubmitField('Увійти')
 
 
 class ProfileForm(FlaskForm):

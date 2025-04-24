@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, ForeignKey, DateTime
+from sqlalchemy import Column, String, Text, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
 from datetime import datetime
@@ -13,7 +13,10 @@ class Post(db.Model, ModelMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     tittle = Column(String(100), nullable=False)
+    image_url = Column(Text, nullable=True)
+    rating = Column(Integer, nullable=False)
     content = Column(String, nullable=False)
     create_date = Column(DateTime, default=datetime.utcnow)
     
-    author = relationship('User', back_populates='likes')
+    author = relationship('User', back_populates='posts')
+    likes = relationship('Likes', back_populates='post')

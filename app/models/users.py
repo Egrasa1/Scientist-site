@@ -1,7 +1,7 @@
 from sqlalchemy import Enum as SqlEnum
 from enum import Enum
 
-from sqlalchemy import Column, String, Integer, func
+from sqlalchemy import Column, String, Integer, Boolean, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 
