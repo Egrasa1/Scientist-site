@@ -1,8 +1,7 @@
 from datetime import datetime
 
 # from sqlalchemy.orm import Session
-from app.models.posts import Post
-from app.models.users import User  # Для перевірки зв'язків
+from app.models import User, Post  # Для перевірки зв'язків
 
 
 # --- CREATE ---class PostController:
@@ -19,7 +18,7 @@ class PostController:
 
     @staticmethod
     def get_post_by_id(post_id: int) -> Post:
-        return Post.query.filter(Post.id == post_id).first()
+        return Post.query.filter(Post.id == post_id).all()
 
     @staticmethod
     def get_posts_by_user(user_id: int, skip: int = 0, limit: int = 100) -> list[Post]:
@@ -35,10 +34,23 @@ class PostController:
         return Post.query.offset(skip).limit(limit).all()
     
     @staticmethod
+    def checking_posts(user_id: int):
+        return Post.query.filter_by(user_id=user_id).first()
+
+    @staticmethod
     def get_post_by_rating(limit: int = 3) -> list[Post]:
         return Post.query.filter_by(rating='Потрібно подивитися').limit(limit).all()
             
-        
+    @staticmethod
+    def update_post(post_id: int, title: str, content: str) -> Post:
+        post = Post.query.filter(Post.id == post_id).first()
+        if post:
+            post.title = title
+            post.content = content
+            Post.save()
+            Post.refresh()
+        return post
+
     @staticmethod
     def update_post_content(post_id: int, new_content: str) -> Post:
         post = Post.query.filter(Post.id == post_id).first()

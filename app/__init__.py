@@ -12,7 +12,7 @@ db = SQLAlchemy(session_options={"autoflush": False})
 
 def create_app(environment="development"):
     from config import config
-    from .routes import user_bp, post_bp, auth_bp, blog_bp, main_bp
+    from .routes import user_bp, auth_bp, blog_bp, main_bp
     from .models import User, AnonymousUser
     
     app = Flask(__name__)
@@ -25,7 +25,7 @@ def create_app(environment="development"):
     login_manager.init_app(app)
     
     app.register_blueprint(user_bp)
-    app.register_blueprint(post_bp)
+    #app.register_blueprint(post_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(blog_bp)
     app.register_blueprint(main_bp)

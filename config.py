@@ -38,7 +38,7 @@ config = {
 
 def send_welcome_email(user_email):
     sender = "illya.d.donchenko@ukr.net"
-    password = "T0XX2Udvx6MzPOOO"
+    password = os.getenv("EMAIL_PASSWORD")
     subject = "Вітаємо з реєстрацією!"
     body = "Вітаємо, ви зареєструвалися на нашому сайті з купою цікавих та захоплюючих новин. Сподіваємося ваш досвід користування нашим сайтом буде виключно позитивним"
 

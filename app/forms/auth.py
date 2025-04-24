@@ -56,4 +56,8 @@ class ProfileForm(FlaskForm):
         'Пароль', 
         validators=[Length(min=6)]
     )
+    description = StringField(
+        'Опис профілю',
+        validators=[Length(max=100)]
+    )
     submit = SubmitField('Оновити')

@@ -18,7 +18,9 @@ class UserController:
     # @staticmethod
     # def get_all_users(db: session) -> list[User]:
     #     return User.query.all()
+    
 
+    
     @staticmethod
     def update_user_name(user_id: int, new_name: str) -> User:
         user = UserController.get_user_by_id(user_id)
@@ -45,6 +47,16 @@ class UserController:
             User.save()
             User.refresh()
         return user
+    
+    @staticmethod
+    def update_user_profile_description(user_id: int, new_profile_description: str) -> User:
+        user = UserController.get_user_by_id(user_id)
+        if user:
+            user.profile_description = new_profile_description
+            User.save()
+            User.refresh()
+        return user
+
 
     @staticmethod
     def delete_user(user_id: int) -> bool:
