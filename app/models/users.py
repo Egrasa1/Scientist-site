@@ -24,8 +24,8 @@ class User(db.Model, ModelMixin, UserMixin):
     name = Column(String(50), nullable=False)
     passwords = Column(String(60), nullable=False)
     email = Column(String(250), unique=True)
-    role = Column(SqlEnum(RoleEnum, name="role_enum"), default=RoleEnum.USER, nullable=False)
-    profile_description = Column(String(100), nullable=False)
+    role = Column(SqlEnum(RoleEnum, name="role_enum"), default=RoleEnum.USER)
+    profile_description = Column(String(100), default="Поки що опис не додано")
 
     posts = relationship('Post', back_populates='author')
     likes = relationship('Likes', back_populates='user')

@@ -1,6 +1,7 @@
 import os
 import smtplib
 from email.mime.text import MIMEText
+from flask_login import current_user
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # Путь до папки в якой знаходиться нинешній файл
 
 class BaseConfig:
@@ -36,26 +37,31 @@ config = {
     "production": ProductionConfig,
 }
 
-def send_welcome_email(user_email):
-    sender = "illya.d.donchenko@ukr.net"
-    password = os.getenv("EMAIL_PASSWORD")
-    subject = "Вітаємо з реєстрацією!"
-    body = "Вітаємо, ви зареєструвалися на нашому сайті з купою цікавих та захоплюючих новин. Сподіваємося ваш досвід користування нашим сайтом буде виключно позитивним"
 
+
+def send_welcome_email(user_email):
+    sender = os.getenv("SENDER_EMAIL")
+    password = os.getenv("SENDER_PASSWORD")
+    #print("Sender:", sender)
+    #print("Password:", "******" if password else None)
+    #print("Recipient:", user_email)
+
+    subject = "Вітаємо з реєстрацією!"
+    body = "Вітаємо, ви зареєструвалися на нашому сайті."
 
     msg = MIMEText(body, "plain", "utf-8")
     msg["Subject"] = subject
     msg["From"] = sender
-    msg["To"] = email
+    msg["To"] = user_email
 
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        with smtplib.SMTP_SSL("smtp.ukr.net", 465) as server:
+            #print("Connecting to SMTP server...")
             server.login(sender, password)
-            server.sendmail(sender, email, msg.as_string())
-            print("Email sent to", email)
+            #print("Logged in successfully.")
+            server.sendmail(sender, user_email, msg.as_string())
+            #print("Email sent to", user_email)
     except Exception as e:
         print("Email send failed:", e)
-
-
 
 

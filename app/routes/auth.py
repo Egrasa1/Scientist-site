@@ -4,6 +4,7 @@ from flask_login import login_user, logout_user
 from app.forms import SignUpForm, LoginForm
 from app.models import User
 
+from config import send_welcome_email
 auth_bp = Blueprint('auth', __name__)
 
 
@@ -18,6 +19,7 @@ def register():
         )
         user.save()
         login_user(user)
+        send_welcome_email(user.email) 
         return redirect(url_for('main.index'))
     return render_template('auth/register.html', register_form=register_form)
 
