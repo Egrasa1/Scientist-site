@@ -13,8 +13,6 @@ blog_bp = Blueprint("blog", __name__, url_prefix="/blog")
 def index():
     check_posts = PostController.checking_posts(current_user.id)
     posts = PostController.get_post_by_id(current_user.id)
-    for post in posts:
-        post.created_at = post.created_at.strftime('%d.%m.%Y')
     return render_template(
         "blog/index.html", title="Блог", current_page=request.endpoint, check_posts=check_posts, posts=posts
     )

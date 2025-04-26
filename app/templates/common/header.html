@@ -64,15 +64,15 @@
     <div class="header-actions">
         {% if current_user.is_authenticated %}
         <div class="user-menu">
-            <!-- Drop-down меня для користувача -->
             <button class="user-avatar">
                 <img src="{{ current_user.avatar or url_for('static', filename='images/default-avatar.jpg') }}" alt="User Avatar">
             </button>
-            <li>
-                <a class="dropdown-item" href="{{ url_for('auth.signout') }}"
-                  >Logout</a
-                >
-            </li>
+            <ul class="dropdown-menu">
+                <li><a href="{{ url_for('user.settings') }}">Settings</a></li>
+                <li><a href="{{ url_for('user.profile') }}">My Profile</a></li>
+                <li><a href="{{ url_for('blog.index') }}">My Posts</a></li>
+                <li><a href="{{ url_for('auth.signout') }}">Log Out</a></li>
+            </ul>
         </div>
         {% else %}
         <div class="auth-buttons">

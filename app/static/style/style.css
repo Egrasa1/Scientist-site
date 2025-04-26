@@ -756,3 +756,111 @@ header {
         font-size: 1.5rem;
     }
 }
+
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 2px solid white;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.user-avatar:hover img {
+    transform: scale(1.05);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 50%; /* Центруємо по горизонталі */
+    transform: translateX(-50%) translateY(-10px); /* Зсуваємо назад на половину ширини */
+    background-color: var(--white);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 1000;
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+    min-width: 180px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dropdown-menu li {
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: var(--dark);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: rgba(var(--primary-rgb), 0.08);
+    color: var(--primary);
+    padding-left: 22px;
+}
+
+.dropdown-menu a i {
+    margin-right: 10px;
+    color: var(--primary);
+    width: 20px;
+    text-align: center;
+}
+
+.user-menu:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* Центрування при відкритті */
+}
+
+/* Стрілка тепер по центру */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%; /* Центруємо стрілку */
+    transform: translateX(-50%); /* Точне центрування */
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid var(--white);
+    filter: drop-shadow(0 -2px 2px rgba(0, 0, 0, 0.05));
+}

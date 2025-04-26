@@ -18,14 +18,12 @@ class PostController:
 
     @staticmethod
     def get_post_by_id(post_id: int) -> Post:
-        return Post.query.filter(Post.id == post_id).all()
+        return Post.query.filter(Post.id == post_id).first()
 
     @staticmethod
-    def get_posts_by_user(user_id: int, skip: int = 0, limit: int = 100) -> list[Post]:
+    def get_posts_by_user(user_id: int):
         return (
-            Post.query.filter(Post.user_id == user_id)
-            .offset(skip)
-            .limit(limit)
+            Post.query.filter_by(Post.user_id == user_id)
             .all()
         )
 
