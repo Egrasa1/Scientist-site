@@ -8,28 +8,28 @@ from app.controllers.post import PostController
 from app.forms import ProfileForm
 
 
-
-user_bp = Blueprint('user', __name__)
+user_bp = Blueprint("user", __name__)
 
 
 @user_bp.route("/profile")
 @login_required
 def profile():
-    user_info = UserController.get_user_by_id(current_user.id)  
+    user_info = UserController.get_user_by_id(current_user.id)
     posts = PostController.get_post_with_author(current_user.id) or []
-    
+
     if not user_info:
         return render_template("error.html", title="Профіль не знайдено"), 404
-    
+
     return render_template(
-        "user/profile.html", 
+        "user/profile.html",
         title="Профіль",
         user=user_info,
-        description=user_info.profile_description or 'Опис профілю відсутній',
+        description=user_info.profile_description or "Опис профілю відсутній",
         user_name=user_info.name,
-        posts=posts
+        posts=posts,
+        current_page=request.endpoint,
     )
-    
+
 
 @user_bp.route("/settings", methods=["GET", "POST"])
 @login_required
@@ -44,10 +44,10 @@ def settings():
         user.save()
         flash("Профіль успішно оновлено", "info")
         return redirect(url_for("user.profile.html"))
-        
+
     elif request.method == "GET":
         form.name.data = user.name
         form.email.data = user.email
         form.description.data = user.profile_description
-        
+
     return render_template("user/settings.html", form=form)

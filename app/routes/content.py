@@ -2,27 +2,40 @@
 from flask import Blueprint, request, url_for, render_template, redirect, jsonify
 from flask_login import current_user
 
-from app.forms import BlogForm
+from app.forms import BlogForm, SearchForm
 
 from app.controllers import PostController
 
 
-content_bp = Blueprint("blog", __name__, url_prefix="/blog")
+content_bp = Blueprint("content", __name__, url_prefix="/blog")
 
 @content_bp.route("/", methods=['GET', 'POST'])
 def index():
     check_posts = PostController.checking_posts(current_user.id)
     posts = PostController.get_post_by_id(current_user.id)
-    for post in posts:
-        post.created_at = post.created_at.strftime('%d.%m.%Y')
     return render_template(
         "blog/index.html", title="Блог", current_page=request.endpoint, check_posts=check_posts, posts=posts
     )
     
-@content_bp.route("/", methods=['GET', 'POST'])
+@content_bp.route("/scientific-news", methods=['GET'])
 def news_feed():
-    posts = PostController.get_all_posts()
-    return render_template("news_feed.html", title="Научні новини", current_page=request.endpoint, posts = posts)
+    page = request.args.get('page', 1, type=int)
+    search_query = request.args.get('query', '').strip()
+        
+    if search_query:
+        posts = PostController.search_posts(query=search_query)
+        pagination = None
+    else:
+        pagination = PostController.get_paginate_posts(page) 
+        posts = pagination.items
+        
+    return render_template(
+        "news_feed.html", 
+        title="Научні новини", 
+        search_query=search_query, 
+        current_page=request.endpoint, 
+        posts=posts, 
+        pagination=pagination)
 
 @content_bp.route("/blog/post", methods=['GET', 'POST'])
 def add_post():
@@ -72,7 +85,7 @@ def view_post(post_id, post_title):
             title=post.title, 
             current_page=request.endpoint, 
             post=post,
-            post_created_at=post.created_at.strftime("%d.%m.%Y"),
+            post_create_date=post.create_date.strftime("%d.%m.%Y"),
             )
     else:
         return redirect(url_for("blog.index"))

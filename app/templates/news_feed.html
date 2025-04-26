@@ -1,3 +1,107 @@
 {% extends "base.html" %} {% block content %}
+<div class="news-container">
+    <form action="{{ url_for('content.news_feed') }}" method="GET" class="search-form">
+        <div class="search-group">
+            <input 
+                type="text"
+                name="query"
+                placeholder="Пошук новин..."
+                value="{{ search_query if search_query }}"
+                class="search-input"
+            >
+            <button type="submit" class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
 
+    {% if not posts %}
+    <div class="empty-state">
+        <div class="empty-icon">(ᗒᗣᗕ)՞</div>
+        <h2 class="empty-title">WOOOOPS</h2>
+        <p class="empty-text">
+            {% if search_query %}
+                Нічого не знайдено за запитом "{{ search_query }}"
+            {% else %}
+                А нема...новин ~'~ поки що новин нема
+            {% endif %}
+        </p>
+    </div>
+    {% else %}
+        {% if search_query %}
+        <div class="search-results-header">
+            <h3>Результат пошуку для "{{ search_query }}"</h3>
+            <a href="{{ url_for('content.news_feed') }}" class="clear-search">
+                Очистити пошук
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="news-feed">
+            {% for post in posts | sort(attribute="create_date", reverse=True) %}
+            <article class="news-article">
+                <div class="article-header">
+                    <div class="article-meta">
+                        <span class="article-date">{{ post.create_date.strftime('%d.%m.%Y') }}</span>
+                        {% if post.rating %}
+                        <span class="article-rating" data-rating="{{ post.rating }}">
+                            {{ post.rating }}
+                        </span>
+                        {% endif %}
+                    </div>
+                    <h2 class="article-title">
+                        <a href="#">{{ post.tittle }}</a>
+                    </h2>
+                </div>
+                
+                {% if post.image_url %}
+                <div class="article-image">
+                    <img src="{{ post.image_url }}" alt="{{ post.tittle }}" loading="lazy">
+                </div>
+                {% endif %}
+                
+                <div class="article-content">
+                    <p class="article-excerpt">{{ post.content|truncate(200) }}</p>
+                    <a href="#" class="read-more">
+                        Читати далі
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        {% if pagination and pagination.pages > 1 %}
+        <div class="pagination">
+            {% if pagination.has_prev %}
+                <a href="?page={{ pagination.prev_num }}{% if search_query %}&query={{ search_query }}{% endif %}" class="page-link">
+                    &laquo;
+                </a>
+            {% endif %}
+
+            {% for page_num in pagination.iter_pages() %}
+                {% if page_num %}
+                    {% if page_num == pagination.page %}
+                        <span class="current-page">{{ page_num }}</span>
+                    {% else %}
+                        <a href="?page={{ page_num }}{% if search_query %}&query={{ search_query }}{% endif %}" class="page-link">
+                            {{ page_num }}
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <span class="ellipsis">...</span>
+                {% endif %}
+            {% endfor %}
+
+            {% if pagination.has_next %}
+                <a href="?page={{ pagination.next_num }}{% if search_query %}&query={{ search_query }}{% endif %}" class="page-link">
+                    &raquo;
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endif %}
+</div>
 {% endblock %}

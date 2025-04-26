@@ -7,8 +7,8 @@
 </div>
 
 <div class="main-container">
-    <div class="main-background">
-    </div>
+    <!-- <div class="main-background">
+    </div> -->
     {% if not hot_posts %}
     <div class="empty-state">
         <div class="empty-icon">(ᗒᗣᗕ)՞</div>
@@ -17,13 +17,13 @@
     </div>
     {% else %}
     <div class="news-grid">
-        {% for post in hot_posts | sort(attribute="created_at") %}
+        {% for post in hot_posts | sort(attribute="create_date") %}
         <div class="news-card">
             <div class="card-image-container">
-                <img src="{{ post.image_url }}" alt="{{ post.title }}" class="card-image">
+                <img src="{{ post.image_url }}" alt="{{ post.tittle }}" class="card-image">
             </div>
             <div class="card-body">
-                <h3 class="card-title"> 🔥 🔥 {{ post.tittle }} 🔥 🔥 {{ post.rating }}</h3>
+                <h3 class="card-title"> 🔥 🔥 {{ post.tittle }} 🔥 🔥</h3>
                 <p class="card-text">{{ post.content|truncate(120) }}</p>
                 <div class="card-footer">
                     <a href="#" class="read-more">

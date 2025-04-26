@@ -19,8 +19,8 @@
             </li>
             <li>
                 <a
-                  href="#"
-                  class="nav-link {{ 'active' if current_page == 'news.index' else '' }}"
+                  href="{{ url_for('content.news_feed') }}"
+                  class="nav-link {{ 'active' if current_page == 'content.news_feed' else '' }}"
                 >
                   Новини
                 </a>
@@ -45,7 +45,7 @@
             <li>
                 <a
                 href="#"
-                class="nav-link {{ 'active' if current_page == 'blog.index' else '' }}"
+                class="nav-link {{ 'active' if current_page == 'content.index' else '' }}"
                 >
                 Блог
                 </a>
@@ -64,28 +64,22 @@
     <div class="header-actions">
         {% if current_user.is_authenticated %}
         <div class="user-menu">
-            <button class="user-avatar">
+            <button class="user-avatar" aria-expanded="false" aria-controls="user-dropdown">
                 <img src="{{ current_user.avatar or url_for('static', filename='images/default-avatar.jpg') }}" alt="User Avatar">
             </button>
-            <ul class="dropdown-menu">
-                <li><a href="{{ url_for('user.settings') }}">Settings</a></li>
-                <li><a href="{{ url_for('user.profile') }}">My Profile</a></li>
-                <li><a href="{{ url_for('blog.index') }}">My Posts</a></li>
-                <li><a href="{{ url_for('auth.signout') }}">Log Out</a></li>
+            <ul class="dropdown-menu" id="user-dropdown">
+                <li><a href="{{ url_for('user.settings') }}"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="{{ url_for('user.profile') }}"><i class="fas fa-user"></i> My Profile</a></li>
+                <li><a href="{{ url_for('content.index') }}"><i class="fas fa-newspaper"></i> My Posts</a></li>
+                <li><a href="{{ url_for('auth.signout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
             </ul>
         </div>
         {% else %}
         <div class="auth-buttons">
-            <a 
-                href="{{ url_for('auth.login') }}" 
-                class="auth-btn login-btn"
-            >
+            <a href="{{ url_for('auth.login') }}" class="auth-btn login-btn">
                 Увійти
             </a>
-            <a 
-                href="{{ url_for('auth.register') }}" 
-                class="auth-btn register-btn"
-            >
+            <a href="{{ url_for('auth.register') }}" class="auth-btn register-btn">
                 Зареєструватися
             </a>
         </div>

@@ -9,10 +9,10 @@ class PostController:
     @staticmethod
     def create_post(user_id: int, title: str, content: str) -> Post:
         new_post = Post(
-            user_id=user_id, 
-            title=title, 
-            content=content, 
-            create_date=datetime.utcnow()
+            user_id=user_id,
+            title=title,
+            content=content,
+            create_date=datetime.utcnow(),
         )
         new_post.save()
 
@@ -21,29 +21,45 @@ class PostController:
         return Post.query.filter(Post.id == post_id).first()
 
     @staticmethod
-    def get_posts_by_user(user_id: int):
-        return (
-            Post.query.filter_by(Post.user_id == user_id)
-            .all()
-        )
+    def get_post_by_tittle(tittle: str) -> Post:
+        return Post.query.filter(Post.tittle == tittle).first()
 
     @staticmethod
-    def get_all_posts(skip: int = 0, limit: int = 100) -> list[Post]:
-        return Post.query.offset(skip).limit(limit).all()
-    
+    def get_posts_by_user(user_id: int):
+        return Post.query.filter_by(Post.user_id == user_id).all()
+
+    @staticmethod
+    def get_paginate_posts(page=1, per_page=8):
+        return Post.query.order_by(Post.create_date.desc()).paginate(
+            page=page, per_page=per_page
+        )
+
     @staticmethod
     def checking_posts(user_id: int):
         return Post.query.filter_by(user_id=user_id).first()
 
+    @classmethod
+    def search_posts(cls, query):
+        if not query:
+            return []
+        
+        search_pattern = f"%{query}%"
+        
+        results = Post.query.filter(
+            Post.tittle.ilike(search_pattern) | 
+            Post.content.ilike(search_pattern)
+        ).order_by(Post.create_date.desc()).all()
+        return results
+
     @staticmethod
     def get_post_by_rating(limit: int = 3) -> list[Post]:
-        return Post.query.filter_by(rating='Потрібно подивитися').limit(limit).all()
-            
+        return Post.query.filter_by(rating="🔥🔥Варто переглянути🔥🔥").limit(limit).all()
+
     @staticmethod
     def update_post(post_id: int, title: str, content: str) -> Post:
         post = Post.query.filter(Post.id == post_id).first()
         if post:
-            post.title = title
+            post.tittle = title
             post.content = content
             Post.save()
             Post.refresh()
@@ -57,15 +73,6 @@ class PostController:
             Post.save()
             Post.refresh()
         return post
-
-    # @staticmethod
-    # def update_post_title(post_id: int, new_title: str) -> Post:
-    #     post = Post.query.filter(Post.id == post_id).first()
-    #     if post:
-    #         post.title = new_title
-    #         Post.save()
-    #         Post.refresh()
-    #     return post
 
     @staticmethod
     def delete_post(post_id: int) -> bool:

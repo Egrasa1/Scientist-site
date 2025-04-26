@@ -1,6 +1,6 @@
-*__pycache__
+__pycache__/
 *.env
-*.venv
-*instance\test.db
-*app\services\parser.ipynb
+.venv/
+instance/test.db
+app/services/parser.ipynb
 *.flaskenv

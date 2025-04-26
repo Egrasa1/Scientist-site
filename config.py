@@ -37,8 +37,6 @@ config = {
     "production": ProductionConfig,
 }
 
-
-
 def send_welcome_email(user_email):
     sender = os.getenv("SENDER_EMAIL")
     password = os.getenv("SENDER_PASSWORD")
