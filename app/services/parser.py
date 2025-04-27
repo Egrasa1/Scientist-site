@@ -37,7 +37,7 @@ def parser_science_news():
 
     try:
         soup = BeautifulSoup(res.text, "html.parser")
-        articles = soup.select(".news-item-tittle")
+        articles = soup.select(".news-item-title")
         hrefs = [a.find("a")["href"] for a in articles if a.find("a")]
 
         if not hrefs:
@@ -100,7 +100,7 @@ def parser_science_news():
                 paragraphs = (
                     post_body_description.find_all("p") if post_body_description else []
                 )
-                description = "\n\n".join(p.get_text(strip=True) for p in paragraphs)
+                description = "\n\n".join(p.get_text() for p in paragraphs)
 
                 post_img_url = None
                 try:

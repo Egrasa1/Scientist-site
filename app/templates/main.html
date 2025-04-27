@@ -26,7 +26,7 @@
                 <h3 class="card-title"> 🔥 🔥 {{ post.tittle }} 🔥 🔥</h3>
                 <p class="card-text">{{ post.content|truncate(120) }}</p>
                 <div class="card-footer">
-                    <a href="#" class="read-more">
+                    <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle) }}" class="read-more">
                         Детальніше 
                         <i class="fas fa-arrow-right"></i>
                     </a>

@@ -6,7 +6,7 @@ from app.services import parser_science_news
 
 
 def savef_news():
-    logging.info("Процес збереження новостей")
+    logging.info("Процес збереження новин")
     try:
         admin_user = User.query.filter_by(role=RoleEnum.ADMIN).first()
 
@@ -28,7 +28,7 @@ def savef_news():
                 image_url=news_item.get("image_url"),
                 user_id=admin_user.id if admin_user else None,
                 rating=news_item.get("rating"),
-                # is_parsed=True,
+                is_parsed=True,
                 create_date=datetime.utcnow(),
             )
             new_post.save()

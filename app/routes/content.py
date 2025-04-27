@@ -82,7 +82,7 @@ def view_post(post_id, post_title):
     if post:
         return render_template(
             "blog/view_post.html", 
-            title=post.title, 
+            title=post.tittle, 
             current_page=request.endpoint, 
             post=post,
             post_create_date=post.create_date.strftime("%d.%m.%Y"),

@@ -1623,3 +1623,87 @@ body {
 .promote-form .btn-primary:hover {
     background-color: #0056b3;
 }
+/* Post Container */
+.post-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+/* Post Header */
+.post-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.post-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.post-date {
+    font-weight: 500;
+    color: var(--primary);
+}
+
+/* Post Image */
+.post-image {
+    margin: 20px 0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.post-image img:hover {
+    transform: scale(1.05);
+}
+
+/* Post Content */
+.post-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--dark);
+    margin-bottom: 20px;
+}
+
+/* Post Footer */
+.post-footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.post-footer .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    background-color: var(--primary);
+    border: none;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.post-footer .btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}

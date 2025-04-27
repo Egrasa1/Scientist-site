@@ -1,3 +1,23 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
 
+{% block content %}
+<div class="post-container">
+    <div class="post-header">
+        <h1 class="post-title">{{ post.tittle }}</h1>
+        <p class="post-meta">
+            Опубліковано: <span class="post-date">{{ post_create_date }}</span>
+        </p>
+    </div>
+    {% if post.image_url %}
+    <div class="post-image">
+        <img src="{{ post.image_url }}" alt="{{ post.tittle }}">
+    </div>
+    {% endif %}
+    <div class="post-content">
+        {{ post.content|replace('\n\n', '</p><p>')|safe }}
+    </div>
+    <div class="post-footer">
+        <a href="{{ url_for('content.news_feed') }}" class="btn btn-primary">Повернутися до новин</a>
+    </div>
+</div>
 {% endblock %}

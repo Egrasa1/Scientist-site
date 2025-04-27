@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, Integer, ForeignKey, DateTime
+from sqlalchemy import Column, String, Text, Integer, ForeignKey, DateTime, Boolean
 from sqlalchemy.orm import relationship
 
 from datetime import datetime
@@ -18,6 +18,7 @@ class Post(db.Model, ModelMixin):
     rating = Column(Integer, nullable=False)
     content = Column(String, nullable=False)
     create_date = Column(DateTime, default=datetime.utcnow)
+    is_parsed = Column(Boolean, default=False)
 
     author = relationship("User", back_populates="posts")
     likes = relationship("Likes", back_populates="post")
