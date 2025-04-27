@@ -1,3 +1,39 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
 
+{% block content %}
+<div class="add-post-container">
+    <div class="add-post-card">
+        <h1 class="add-post-title">Створити новий пост</h1>
+        <div class="divider"></div>
+        
+        <form action="{{ url_for('content.add_post') }}" method="POST" class="add-post-form">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group floating">
+                {{ form.title(class="form-control", id="title", placeholder=" ") }}
+                <label for="title">Заголовок</label>
+                {% if form.title.errors %}
+                <div class="form-error">
+                    {{ form.title.errors[0] }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group floating">
+                {{ form.content(class="form-control textarea-control", id="content", placeholder=" ", rows="6") }}
+                <label for="content">Контент поста</label>
+                {% if form.content.errors %}
+                <div class="form-error">
+                    {{ form.content.errors[0] }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-submit">
+                <span class="btn-text">Опублікувати</span>
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+</div>
 {% endblock %}

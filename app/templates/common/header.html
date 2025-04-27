@@ -44,10 +44,10 @@
             {% if current_user.is_authenticated %}
             <li>
                 <a
-                href="#"
-                class="nav-link {{ 'active' if current_page == 'content.index' else '' }}"
+                  href="{{ url_for('content.blog') }}"
+                  class="nav-link {{ 'active' if current_page == 'content.blog' else '' }}"
                 >
-                Блог
+                  Блог
                 </a>
             </li>
             <li>

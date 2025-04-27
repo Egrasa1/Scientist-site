@@ -7,11 +7,12 @@ from app.models import User, Post  # Для перевірки зв'язків
 # --- CREATE ---class PostController:
 class PostController:
     @staticmethod
-    def create_post(user_id: int, title: str, content: str) -> Post:
+    def create_post(user_id: int, title: str, content: str, rating: int = 0) -> Post:
         new_post = Post(
             user_id=user_id,
-            title=title,
+            tittle=title,
             content=content,
+            rating=rating, 
             create_date=datetime.utcnow(),
         )
         new_post.save()
@@ -29,8 +30,13 @@ class PostController:
         return Post.query.filter_by(Post.user_id == user_id).all()
 
     @staticmethod
-    def get_paginate_posts(page=1, per_page=8):
-        return Post.query.order_by(Post.create_date.desc()).paginate(
+    def get_paginate_posts(page=1, per_page=8, is_parsed=True):
+        query = Post.query
+
+        if is_parsed is not None:
+            query = query.filter(Post.is_parsed == is_parsed)
+
+        return query.order_by(Post.create_date.desc()).paginate(
             page=page, per_page=per_page
         )
 
@@ -91,3 +97,7 @@ class PostController:
         .order_by(User.name)  # Sort by user's nickname
         .all()
     )
+        
+    @staticmethod
+    def get_not_parsed_posts() -> list[Post]:
+        return Post.query.filter_by(is_parsed=False).all()

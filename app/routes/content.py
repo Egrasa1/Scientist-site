@@ -1,4 +1,3 @@
-
 from flask import Blueprint, request, url_for, render_template, redirect, jsonify
 from flask_login import current_user
 
@@ -26,16 +25,17 @@ def news_feed():
         posts = PostController.search_posts(query=search_query)
         pagination = None
     else:
-        pagination = PostController.get_paginate_posts(page) 
+        pagination = PostController.get_paginate_posts(page=page, is_parsed=True)
         posts = pagination.items
         
     return render_template(
         "news_feed.html", 
-        title="Научні новини", 
+        title="Наукові новини", 
         search_query=search_query, 
         current_page=request.endpoint, 
         posts=posts, 
-        pagination=pagination)
+        pagination=pagination
+    )
 
 @content_bp.route("/blog/post", methods=['GET', 'POST'])
 def add_post():
@@ -43,16 +43,21 @@ def add_post():
         form = BlogForm(request.form)
         
         if form.validate_on_submit():
-            
             PostController.create_post(
                 title=form.title.data, 
                 content=form.content.data,  
                 user_id=current_user.id
-                )
-                
-            return redirect(url_for("blog.index"))
+            )
+            return redirect(url_for("content.index"))
         elif form.is_submitted():
             return render_template(
+                "blog/add_post.html", 
+                title="Додати пост", 
+                current_page=request.endpoint, 
+                form=form
+            )
+
+        return render_template(
             "blog/add_post.html", 
             title="Додати пост", 
             current_page=request.endpoint, 
@@ -79,6 +84,7 @@ def delete_post(post_id):
 @content_bp.route("/post/<post_id>/<post_title>", methods=['GET', 'POST'])
 def view_post(post_id, post_title):
     post = PostController.get_post_by_id(post_id)
+    source = request.args.get('source', 'news_feed')
     if post:
         return render_template(
             "blog/view_post.html", 
@@ -86,6 +92,7 @@ def view_post(post_id, post_title):
             current_page=request.endpoint, 
             post=post,
             post_create_date=post.create_date.strftime("%d.%m.%Y"),
+            source=source
             )
     else:
         return redirect(url_for("blog.index"))
@@ -109,4 +116,16 @@ def edit_post(post_id, post_title):
         current_page=request.endpoint, 
         form=form,
         form_action=url_for("blog.edit_post", post_id=post_id, post_title=post_title)
+    )
+        
+        
+        
+@content_bp.route('/blog', methods=['GET', 'POST'])
+def blog():
+    posts =PostController.get_not_parsed_posts()
+    return render_template(
+        'blog/index.html',
+        title='Блог',
+        posts=posts,
+        current_page=request.endpoint
     )

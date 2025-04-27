@@ -1,3 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="blog-container">
+    {% if posts %}
+    <div class="blog-header">
+        <h1>Блоги користувачів</h1>
+        <a href="{{ url_for('content.add_post') }}" class="btn btn-primary">Додати свій блог</a>
+    </div>
+    {% else %}
+    <div class="blog-header centered">
+        <h1>Блоги користувачів</h1>
+        <a href="{{ url_for('content.add_post') }}" class="btn btn-primary">Додати свій блог</a>
+    </div>
+    {% endif %}
+
+    {% if posts %}
+    <div class="posts-grid">
+        {% for post in posts %}
+        <div class="post-card">
+            <h3 class="post-title">{{ post.tittle }}</h3>
+            <p class="post-content">{{ post.content|truncate(120) }}</p>
+            <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle, source='blog') }}" class="read-more">
+                Читати далі
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="no-posts">Блогів користувачів ще немає будьте першим!</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -15,7 +15,7 @@ class Post(db.Model, ModelMixin):
     user_id = Column(Integer, ForeignKey("users.id"))
     tittle = Column(String(100), nullable=False)
     image_url = Column(Text, nullable=True)
-    rating = Column(Integer, nullable=False)
+    rating = Column(Integer, nullable=False, default=0)
     content = Column(String, nullable=False)
     create_date = Column(DateTime, default=datetime.utcnow)
     is_parsed = Column(Boolean, default=False)

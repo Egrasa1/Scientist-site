@@ -17,7 +17,9 @@
         {{ post.content|replace('\n\n', '</p><p>')|safe }}
     </div>
     <div class="post-footer">
-        <a href="{{ url_for('content.news_feed') }}" class="btn btn-primary">Повернутися до новин</a>
+        <a href="{{ url_for('content.' + source) }}" class="btn btn-primary">
+            Повернутися до {{ 'новин' if source == 'news_feed' else 'блогу' }}
+        </a>
     </div>
 </div>
 {% endblock %}
