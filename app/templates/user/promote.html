@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="promote-container">
+    <h1>Підвищення користувача до адміністратора</h1>
+    <form action="{{ url_for('user.promote_to_admin') }}" method="POST" class="promote-form">
+        <div class="form-group">
+            <label for="user_id">ID користувача</label>
+            <input type="number" name="user_id" id="user_id" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="admin_password">Пароль адміністратора</label>
+            <input type="password" name="admin_password" id="admin_password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Підвищити</button>
+    </form>
+</div>
+{% endblock %}

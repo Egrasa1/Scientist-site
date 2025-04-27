@@ -1,11 +1,12 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 
-from app.models import User
+from app.models import User, RoleEnum
 from app.controllers.user import UserController
 from app.controllers.post import PostController
 
 from app.forms import ProfileForm
+import os
 
 
 user_bp = Blueprint("user", __name__)
@@ -14,9 +15,9 @@ user_bp = Blueprint("user", __name__)
 @user_bp.route("/profile")
 @login_required
 def profile():
-    user_info = UserController.get_user_by_id(current_user.id)
-    posts = PostController.get_post_with_author(current_user.id) or []
-
+    user_info = UserController.get_user_by_id(current_user.id)  
+    posts = PostController.get_post_with_author(current_user.name) or []
+    
     if not user_info:
         return render_template("error.html", title="Профіль не знайдено"), 404
 
@@ -43,7 +44,7 @@ def settings():
         user.profile_description = form.description.data
         user.save()
         flash("Профіль успішно оновлено", "info")
-        return redirect(url_for("user.profile.html"))
+        return redirect(url_for("user.profile"))
 
     elif request.method == "GET":
         form.name.data = user.name
@@ -51,3 +52,28 @@ def settings():
         form.description.data = user.profile_description
 
     return render_template("user/settings.html", form=form)
+
+@user_bp.route("/promote", methods=["GET", "POST"])
+@login_required
+def promote_to_admin():
+    if request.method == "POST":
+        user_id = request.form.get("user_id")
+        admin_password = request.form.get("admin_password")
+
+        # Отримуємо пароль адміністратора з .env
+        correct_password = os.getenv("ADMIN_PASSWORD")
+
+        if not correct_password or admin_password != correct_password:
+            flash("Неправильний пароль адміністратора!", "danger")
+            return redirect(url_for("user.promote_to_admin"))
+
+        user = User.query.get(user_id)
+        if user:
+            user.role = RoleEnum.ADMIN
+            user.save()
+            flash(f"Користувача {user.name} успішно підвищено до адміністратора.", "success")
+        else:
+            flash("Користувача не знайдено.", "danger")
+        return redirect(url_for("user.profile"))
+
+    return render_template("user/promote.html")

@@ -5,6 +5,8 @@ import logging
 
 from app.controllers import savef_news
 from app import create_app, db, models
+from app.controllers import UserController
+
 
 app = create_app()
 
@@ -30,7 +32,9 @@ def get_context():
     # - app (Flask додаток)
     # - db (SQLAlchemy)
     # - models (Доступ до всіх моделок)
-    return dict(app=app, db=db, models=models)
+    print("Shell context loaded")
+    return dict(app=app, db=db, models=models)#(promote_user_to_admin=promote_user_to_admin)
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)

@@ -84,9 +84,10 @@ class PostController:
         return False
 
     @staticmethod
-    def get_post_with_author(post_id: int) -> dict:
-        post = Post.query.filter(Post.id == post_id).first()
-        if post:
-            author = Post.query.filter(User.id == post.user_id).first()
-            return {"post": post, "author": author}
-        return None
+    def get_post_with_author(user_id: int) -> list:
+        return (
+        Post.query.join(User, Post.user_id == User.id)
+        .filter(Post.user_id == user_id)
+        .order_by(User.name)  # Sort by user's nickname
+        .all()
+    )

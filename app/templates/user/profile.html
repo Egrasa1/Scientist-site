@@ -1,3 +1,38 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
 
+{% block content %}
+<div class="profile-container">
+    <div class="profile-layout">
+        <!-- Left Column - Profile Info -->
+        <div class="profile-left">
+            <div class="profile-avatar">
+                <img src="{{ user.avatar or url_for('static', filename='images/default-avatar.jpg') }}" alt="User Avatar">
+            </div>
+            <div class="profile-info">
+                <h1 class="profile-name">{{ user.name }}</h1>
+                <p class="profile-description">{{ description }}</p>
+            </div>
+        </div>
+
+        <!-- Right Column - User Posts -->
+        <div class="profile-right">
+            <div class="profile-posts">
+                <h2>Мої пости</h2>
+                {% if posts %}
+                    <div class="posts-grid">
+                        {% for post in posts %}
+                        <div class="post-card">
+                            <h3 class="post-title">{{ post.tittle }}</h3>
+                            <p class="post-content">{{ post.content|truncate(120) }}</p>
+                            <a href="{{ url_for('blog.view_post', post_id=post.id, post_title=post.title) }}" class="read-more">Детальніше</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>У цього користувача ще немає постів.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

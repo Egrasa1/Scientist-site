@@ -1,5 +1,7 @@
 # from app.models.base import Base, session
 from app.models.users import User
+import os
+from app.models import RoleEnum    
 
 class UserController:
     @staticmethod
@@ -66,3 +68,13 @@ class UserController:
             User.save()
             return True
         return False
+    
+    
+    @staticmethod
+    def promote_user_to_admin(user_id: int) -> User:
+        user = UserController.get_user_by_id(user_id)
+        if user:
+            user.role = RoleEnum.ADMIN
+            User.save()
+            User.refresh()
+        return user
