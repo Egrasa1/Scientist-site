@@ -27,7 +27,7 @@ class PostController:
 
     @staticmethod
     def get_posts_by_user(user_id: int):
-        return Post.query.filter_by(Post.user_id == user_id).all()
+        return Post.query.filter(Post.user_id == user_id, Post.is_parsed == False).all()
 
     @staticmethod
     def get_paginate_posts(page=1, per_page=8, is_parsed=True):
@@ -93,8 +93,8 @@ class PostController:
     def get_post_with_author(user_id: int) -> list:
         return (
         Post.query.join(User, Post.user_id == User.id)
-        .filter(Post.user_id == user_id)
-        .order_by(User.name)  # Sort by user's nickname
+        .filter(Post.user_id == user_id, Post.is_parsed == False)
+        .order_by(User.name)  
         .all()
     )
         

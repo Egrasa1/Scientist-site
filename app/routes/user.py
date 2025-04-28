@@ -16,7 +16,7 @@ user_bp = Blueprint("user", __name__)
 @login_required
 def profile():
     user_info = UserController.get_user_by_id(current_user.id)  
-    posts = PostController.get_post_with_author(current_user.name) or []
+    posts = PostController.get_post_with_author(current_user.id) or []
     
     if not user_info:
         return render_template("error.html", title="Профіль не знайдено"), 404

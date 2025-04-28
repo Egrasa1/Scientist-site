@@ -11,9 +11,13 @@ content_bp = Blueprint("content", __name__, url_prefix="/blog")
 @content_bp.route("/", methods=['GET', 'POST'])
 def index():
     check_posts = PostController.checking_posts(current_user.id)
-    posts = PostController.get_post_by_id(current_user.id)
+    posts = PostController.get_posts_by_user(current_user.id)  # Повертає список постів
     return render_template(
-        "blog/index.html", title="Блог", current_page=request.endpoint, check_posts=check_posts, posts=posts
+        "blog/index.html", 
+        title="Блог", 
+        current_page=request.endpoint, 
+        check_posts=check_posts, 
+        posts=posts
     )
     
 @content_bp.route("/scientific-news", methods=['GET'])
