@@ -1,33 +1,46 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="blog-container">
-    {% if posts %}
-    <div class="blog-header">
-        <h1>Блоги користувачів</h1>
-        <a href="{{ url_for('content.add_post') }}" class="btn btn-primary">Додати свій блог</a>
+    <div class="blog-header {% if not posts %}centered{% endif %}">
+        <h1 class="blog-title">Блоги користувачів</h1>
+        <a href="{{ url_for('content.add_post') }}" class="btn btn-primary btn-add-post">
+            <i class="fas fa-plus-circle"></i>
+            <span>Додати свій блог</span>
+        </a>
     </div>
-    {% else %}
-    <div class="blog-header centered">
-        <h1>Блоги користувачів</h1>
-        <a href="{{ url_for('content.add_post') }}" class="btn btn-primary">Додати свій блог</a>
-    </div>
-    {% endif %}
 
     {% if posts %}
     <div class="posts-grid">
         {% for post in posts %}
         <div class="post-card">
-            <h3 class="post-title">{{ post.tittle }}</h3>
-            <p class="post-content">{{ post.content|truncate(120) }}</p>
-            <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle, source='blog') }}" class="read-more">
-                Читати далі
-            </a>
+            <div class="card-header">
+                <h3 class="post-title">{{ post.tittle }}</h3>
+                <span class="post-author">Автор: {{ post.author.username }}</span>
+            </div>
+            <div class="card-content">
+                <p class="post-excerpt">{{ post.content|truncate(150) }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle, source='blog') }}" class="read-more">
+                    Читати далі
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <span class="post-date">{{ post.create_date.strftime('%d.%m.%Y') }}</span>
+            </div>
         </div>
         {% endfor %}
     </div>
     {% else %}
-    <p class="no-posts">Блогів користувачів ще немає будьте першим!</p>
+    <div class="empty-state">
+        <div class="empty-icon">
+            <i class="fas fa-book-open"></i>
+        </div>
+        <h3 class="empty-title">Блогів ще немає</h3>
+        <p class="empty-text">Будьте першим, хто поділиться своїми думками!</p>
+        <a href="{{ url_for('content.add_post') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Створити блог
+        </a>
+    </div>
     {% endif %}
 </div>
 {% endblock %}

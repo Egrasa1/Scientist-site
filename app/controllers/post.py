@@ -84,8 +84,7 @@ class PostController:
     def delete_post(post_id: int) -> bool:
         post = Post.query.filter(Post.id == post_id).first()
         if post:
-            Post.delete(post)
-            Post.save()
+            post.delete()
             return True
         return False
 

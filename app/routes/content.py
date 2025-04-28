@@ -1,9 +1,11 @@
+import logging
+
 from flask import Blueprint, request, url_for, render_template, redirect, jsonify
 from flask_login import current_user
 
 from app.forms import BlogForm, SearchForm
 
-from app.controllers import PostController
+from app.controllers import PostController, UserController
 
 
 content_bp = Blueprint("content", __name__, url_prefix="/blog")
@@ -71,16 +73,17 @@ def add_post():
         return jsonify({'error': str(e)}), 400
     
     
-@content_bp.route("/post/<int:post_id>", methods=["DELETE"])
-def delete_post(post_id):
+@content_bp.route("/post/<int:post_id>", methods=["GET", "POST"])
+def delete_post(post_id, post_title):
     post = PostController.get_post_by_id(post_id)
 
     if not post or current_user.id != post.user_id:
-        return redirect(url_for("blog.index"), code=303)
+        return redirect(url_for("main.index"), code=303)
 
     PostController.delete_post(post_id)
+    logging.info(f"Пост було видаленно: {post_title}")
 
-    return redirect(url_for("blog.index"), code=303)
+    return redirect(url_for("content.index"), code=303)
 
 
 
@@ -88,6 +91,7 @@ def delete_post(post_id):
 @content_bp.route("/post/<post_id>/<post_title>", methods=['GET', 'POST'])
 def view_post(post_id, post_title):
     post = PostController.get_post_by_id(post_id)
+    user = UserController.check_user_is_admin(current_user.id)
     source = request.args.get('source', 'news_feed')
     if post:
         return render_template(
@@ -95,6 +99,7 @@ def view_post(post_id, post_title):
             title=post.tittle, 
             current_page=request.endpoint, 
             post=post,
+            user=user,
             post_create_date=post.create_date.strftime("%d.%m.%Y"),
             source=source
             )

@@ -16,12 +16,6 @@ class UserController:
     @staticmethod
     def get_user_by_id(user_id: int) -> User:
         return User.query.filter(User.id == user_id).first()
-
-    # @staticmethod
-    # def get_all_users(db: session) -> list[User]:
-    #     return User.query.all()
-    
-
     
     @staticmethod
     def update_user_name(user_id: int, new_name: str) -> User:
@@ -68,6 +62,13 @@ class UserController:
             User.save()
             return True
         return False
+    
+    @staticmethod
+    def check_user_is_admin(user_id: int) -> bool:
+        user = UserController.get_user_by_id(user_id)
+        if not user:
+            return False
+        return user.role == RoleEnum.ADMIN
     
     
     @staticmethod
