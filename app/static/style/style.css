@@ -2063,3 +2063,113 @@ body {
     }
 }
 
+.edit-post-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.edit-post-card {
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-post-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.divider {
+    height: 2px;
+    background-color: #e0e0e0;
+    margin-bottom: 1.5rem;
+}
+
+.edit-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group.floating label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: #888888;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.form-group.floating input:focus + label,
+.form-group.floating textarea:focus + label,
+.form-group.floating input:not(:placeholder-shown) + label,
+.form-group.floating textarea:not(:placeholder-shown) + label {
+    top: -0.5rem;
+    left: 0.8rem;
+    font-size: 0.85rem;
+    color: #555555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.textarea-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-error {
+    font-size: 0.85rem;
+    color: #ff4d4d;
+    margin-top: 0.5rem;
+}
+
+.btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+.btn-submit i {
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+}

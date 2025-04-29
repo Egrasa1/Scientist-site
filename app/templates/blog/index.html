@@ -14,7 +14,7 @@
         <div class="post-card">
             <div class="card-header">
                 <h3 class="post-title">{{ post.tittle }}</h3>
-                <span class="post-author">Автор: {{ post.author.username }}</span>
+                <span class="post-author">Автор: {{ post.author.name }}</span>
             </div>
             <div class="card-content">
                 <p class="post-excerpt">{{ post.content|truncate(150) }}</p>
@@ -29,7 +29,7 @@
         </div>
         {% endfor %}
     </div>
-    {% else %}
+    {% else %}  
     <div class="empty-state">
         <div class="empty-icon">
             <i class="fas fa-book-open"></i>

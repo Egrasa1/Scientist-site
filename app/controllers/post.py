@@ -1,6 +1,6 @@
 from datetime import datetime
-
-# from sqlalchemy.orm import Session
+import logging
+from sqlalchemy.orm import joinedload
 from app.models import User, Post  # Для перевірки зв'язків
 
 
@@ -67,8 +67,8 @@ class PostController:
         if post:
             post.tittle = title
             post.content = content
-            Post.save()
-            Post.refresh()
+            post.save()
+            post.refresh()
         return post
 
     @staticmethod
@@ -85,7 +85,9 @@ class PostController:
         post = Post.query.filter(Post.id == post_id).first()
         if post:
             post.delete()
+            logging.info(f"Пост із ID {post_id} видалено.")
             return True
+        logging.warning(f"Пост із ID {post_id} не знайдено.")
         return False
 
     @staticmethod
@@ -99,4 +101,4 @@ class PostController:
         
     @staticmethod
     def get_not_parsed_posts() -> list[Post]:
-        return Post.query.filter_by(is_parsed=False).all()
+        return Post.query.options(joinedload(Post.author)).filter_by(is_parsed=False).all()

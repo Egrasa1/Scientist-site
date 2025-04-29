@@ -73,17 +73,17 @@ def add_post():
         return jsonify({'error': str(e)}), 400
     
     
-@content_bp.route("/post/<int:post_id>", methods=["GET", "POST"])
+@content_bp.route("/post/delete/<int:post_id>/<post_title>", methods=["GET", "POST"])
 def delete_post(post_id, post_title):
     post = PostController.get_post_by_id(post_id)
 
     if not post or current_user.id != post.user_id:
-        return redirect(url_for("main.index"), code=303)
+        return redirect(url_for("content.blog"), code=303)
 
-    PostController.delete_post(post_id)
-    logging.info(f"Пост було видаленно: {post_title}")
+    PostController.delete_post(post_id) 
+    logging.info(f"Пост було видалено: {post_title}")
 
-    return redirect(url_for("content.index"), code=303)
+    return redirect(url_for("content.blog"), code=303)
 
 
 
@@ -102,7 +102,7 @@ def view_post(post_id, post_title):
             user=user,
             post_create_date=post.create_date.strftime("%d.%m.%Y"),
             source=source
-            )
+        )
     else:
         return redirect(url_for("blog.index"))
     
@@ -111,24 +111,29 @@ def view_post(post_id, post_title):
 def edit_post(post_id, post_title):
     post = PostController.get_post_by_id(post_id)
     if not post:
-        return redirect(url_for("blog.index"))
+        return redirect(url_for("content.index"))
 
     form = BlogForm(obj=post)
     if form.validate_on_submit():
-            PostController.update_post(post_id, form.title.data, form.content.data)
-            return redirect(url_for("blog.view_post", post_title=post.title, post_id=post_id))
+        PostController.update_post(post_id, form.title.data, form.content.data)
+        return redirect(url_for("content.view_post", post_title=form.title.data, post_id=post_id))
     elif form.is_submitted():
-    
         return render_template(
+            "blog/edit_post.html", 
+            title="Редагувати пост", 
+            current_page=request.endpoint, 
+            form=form,
+            form_action=url_for("content.edit_post", post_id=post_id, post_title=post_title)
+        )
+    return render_template(
         "blog/edit_post.html", 
         title="Редагувати пост", 
         current_page=request.endpoint, 
         form=form,
-        form_action=url_for("blog.edit_post", post_id=post_id, post_title=post_title)
+        form_action=url_for("content.edit_post", post_id=post_id, post_title=post_title)
     )
-        
-        
-        
+
+
 @content_bp.route('/blog', methods=['GET', 'POST'])
 def blog():
     posts =PostController.get_not_parsed_posts()

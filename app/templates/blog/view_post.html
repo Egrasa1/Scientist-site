@@ -3,19 +3,19 @@
 {% block content %}
 <div class="post-container">
     <div class="post-header">
-        {% if not current_user.id != post.user_id%}
-        {% elif user %}
+        {% if current_user.id == post.user_id or user%}
         <div class="post-actions">
-            <a href="{{ url_for('content.edit_post', post_id=post.id, post_title=post.title) }}" class="btn-action btn-edit">
+            <a href="{{ url_for('content.edit_post', post_id=post.id, post_title=post.tittle) }}" class="btn-action btn-edit">
                 <i class="fas fa-edit"></i>
                 <span>Редагувати</span>
             </a>
-            <a href="{{ url_for('content.delete_post', post_id=post.id, post_title=post.title) }}" class="btn-action btn-delete">
+            <a href="{{ url_for('content.delete_post', post_id=post.id, post_title=post.tittle) }}" class="btn-action btn-delete">
                 <i class="fas fa-trash-alt"></i>
                 <span>Видалити</span>
             </a>
         </div>
         {% endif %}
+
         <h1 class="post-title">{{ post.tittle }}</h1>
         <p class="post-meta">
             Опубліковано: <span class="post-date">{{ post_create_date }}</span>
