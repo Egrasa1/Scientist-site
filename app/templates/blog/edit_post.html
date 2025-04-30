@@ -10,8 +10,8 @@
             {{ form.hidden_tag() }}
             
             <div class="form-group floating">
-                {{ form.title(class="form-control", id="title", placeholder=" ") }}
-                <label for="title">Заголовок</label>
+                {{ form.title(class="form-control", id="title", placeholder=" ", value=post.tittle) }}
+                <label for="title">Заголовок (поточний: {{ post.tittle }})</label>
                 {% if form.title.errors %}
                 <div class="form-error">
                     {{ form.title.errors[0] }}

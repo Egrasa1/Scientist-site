@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block content %}
 <div class="blog-container">
     <div class="blog-header {% if not posts %}centered{% endif %}">
         <h1 class="blog-title">Блоги користувачів</h1>
@@ -11,25 +13,51 @@
     {% if posts %}
     <div class="posts-grid">
         {% for post in posts %}
-        <div class="post-card">
-            <div class="card-header">
-                <h3 class="post-title">{{ post.tittle }}</h3>
-                <span class="post-author">Автор: {{ post.author.name }}</span>
+        <article class="news-article">
+            <div class="article-header">
+                <div class="article-meta">
+                    <span class="article-date">{{ post.create_date.strftime('%d.%m.%Y') }}</span>
+                    <span class="article-author">Автор: {{ post.author.name }}</span>
+                </div>
+                <h2 class="article-title">
+                    <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle, source='blog') }}">
+                        {{ post.tittle }}
+                    </a>
+                </h2>
             </div>
-            <div class="card-content">
-                <p class="post-excerpt">{{ post.content|truncate(150) }}</p>
+            
+            {% if post.image_url %}
+            <div class="article-image">
+                <img src="{{ post.image_url }}" alt="{{ post.tittle }}" loading="lazy">
             </div>
-            <div class="card-footer">
+            {% endif %}
+            
+            <div class="article-content">
+                <p class="article-excerpt">{{ post.content|truncate(200) }}</p>
                 <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle, source='blog') }}" class="read-more">
                     Читати далі
                     <i class="fas fa-arrow-right"></i>
                 </a>
-                <span class="post-date">{{ post.create_date.strftime('%d.%m.%Y') }}</span>
             </div>
-        </div>
+        </article>
         {% endfor %}
     </div>
-    {% else %}  
+
+    <!-- Пагінація -->
+    {% if pagination and pagination.pages > 1 %}
+<div class="pagination">
+    {% if pagination.has_prev %}
+    <a href="{{ url_for('content.blog', page=pagination.prev_num) }}" class="btn btn-secondary">Попередня</a>
+    {% endif %}
+
+    <span>Сторінка {{ pagination.page }} із {{ pagination.pages }}</span>
+
+    {% if pagination.has_next %}
+    <a href="{{ url_for('content.blog', page=pagination.next_num) }}" class="btn btn-secondary">Наступна</a>
+    {% endif %}
+</div>
+{% endif %}
+    {% else %}
     <div class="empty-state">
         <div class="empty-icon">
             <i class="fas fa-book-open"></i>

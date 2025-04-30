@@ -42,6 +42,21 @@ def news_feed():
         posts=posts, 
         pagination=pagination
     )
+    
+    
+@content_bp.route('/blog', methods=['GET'])
+def blog(): 
+    page = request.args.get('page', 1, type=int)  # Отримуємо номер сторінки
+    pagination = PostController.get_paginate_blogs(page=page, per_page=4, is_parsed=False)  # Отримуємо об'єкт пагінації
+    posts = pagination.items  # Отримуємо список постів для поточної сторінки
+
+    return render_template(
+        'blog/index.html',
+        title='Блог',
+        posts=posts,
+        pagination=pagination,  # Передаємо об'єкт пагінації в шаблон
+        current_page=request.endpoint
+    )
 
 @content_bp.route("/blog/post", methods=['GET', 'POST'])
 def add_post():
@@ -123,6 +138,7 @@ def edit_post(post_id, post_title):
             title="Редагувати пост", 
             current_page=request.endpoint, 
             form=form,
+            post=post,  
             form_action=url_for("content.edit_post", post_id=post_id, post_title=post_title)
         )
     return render_template(
@@ -130,16 +146,8 @@ def edit_post(post_id, post_title):
         title="Редагувати пост", 
         current_page=request.endpoint, 
         form=form,
+        post=post,  
         form_action=url_for("content.edit_post", post_id=post_id, post_title=post_title)
     )
 
 
-@content_bp.route('/blog', methods=['GET', 'POST'])
-def blog():
-    posts =PostController.get_not_parsed_posts()
-    return render_template(
-        'blog/index.html',
-        title='Блог',
-        posts=posts,
-        current_page=request.endpoint
-    )

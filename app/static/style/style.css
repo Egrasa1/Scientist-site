@@ -1309,18 +1309,6 @@ header {
         left: 0;
     }
 }
-:root {
-    --primary: #4361ee;
-    --primary-dark: #3a0ca3;
-    --secondary: #f72585;
-    --light: #f8f9fa;
-    --dark: #212529;
-    --gray: #6c757d;
-    --light-gray: #e9ecef;
-    --border-radius: 12px;
-    --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
-}
 
 * {
     box-sizing: border-box;
@@ -1573,30 +1561,32 @@ body {
 }
 
 .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 3rem 0;
 }
-
 .post-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
     padding: 1.5rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #eee;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-
-.post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
 .post-title {
     font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     color: #333;
+    line-height: 1.4;
+    overflow: hidden; /* Приховує зайвий текст */
+    text-overflow: ellipsis; /* Додає три крапки, якщо текст не вміщується */
+    white-space: nowrap; /* Обмежує текст одним рядком */
 }
 
 .post-content {
@@ -1604,6 +1594,11 @@ body {
     color: #666;
     margin-bottom: 1rem;
     line-height: 1.5;
+    overflow: hidden; /* Приховує зайвий текст */
+    text-overflow: ellipsis; /* Додає три крапки, якщо текст не вміщується */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Обмеження кількості рядків */
+    -webkit-box-orient: vertical;
 }
 
 .read-more {
@@ -1612,14 +1607,13 @@ body {
     font-weight: 500;
     transition: color 0.3s ease;
     display: inline-block;
-    margin-top: 0.5rem;
+    margin-top: auto; /* Вирівнювання кнопки внизу */
 }
 
 .read-more:hover {
     color: #3367d6;
     text-decoration: underline;
 }
-
 .no-posts-message {
     text-align: center;
     padding: 3rem;
@@ -1670,6 +1664,8 @@ body {
         grid-template-columns: 1fr;
     }
 }
+    
+
 .promote-container {
     max-width: 600px;
     margin: 50px auto;
@@ -1814,119 +1810,186 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
 }
+/* Сторінка блогу */
 .blog-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+    max-width: 1300px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
 }
 
 .blog-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 1rem;
 }
 
 .blog-header.centered {
     flex-direction: column;
     text-align: center;
-    gap: 1rem;
-}
-
-.blog-header h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--dark);
-}
-
-.blog-header .btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--white);
-    background-color: var(--primary);
-    border: none;
-    border-radius: var(--border-radius);
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.blog-header .btn:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
-}
-
-.posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
 }
 
-.post-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #eee;
+.blog-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    opacity: 0.2;
 }
 
-.post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.blog-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin: 0;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+}
+
+
+/* Новий макет з чергуванням постів */
+.posts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.post-card {
+    width: 48%;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Чергування карток - парні вправо, непарні вліво */
+.post-card:nth-child(odd) {
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+.post-card:nth-child(even) {
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+/* Анімації для різних сторін */
+.post-card:nth-child(odd) {
+    animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.post-card:nth-child(even) {
+    animation: slideInRight 0.6s ease-out forwards;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.card-header {
+    padding: 0 0 1rem 0;
+    border-bottom: 1px solid var(--light-gray);
 }
 
 .post-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #333;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--dark);
+    line-height: 1.4;
 }
 
-.post-content {
-    font-size: 0.9rem;
-    color: #666;
+.post-author {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--gray);
     margin-bottom: 1rem;
-    line-height: 1.5;
+}
+
+.card-content {
+    padding: 1rem 0;
+}
+
+.post-excerpt {
+    color: var(--gray);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.card-footer {
+    padding: 1rem 0 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .read-more {
-    color: #4285f4;
+    color: var(--primary);
+    font-weight: 600;
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    display: inline-block;
-    margin-top: 0.5rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .read-more:hover {
-    color: #3367d6;
-    text-decoration: underline;
+    color: var(--secondary);
+    gap: 0.75rem;
 }
 
-.no-posts {
+.post-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+.empty-state {
     text-align: center;
-    margin-top: 2rem;
-    color: #666;
+    padding: 4rem 2rem;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin: 3rem auto;
+    max-width: 500px;
 }
 .add-post-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 120px); /* Висота екрану мінус висота хедера */
-    padding: 20px;
-    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
 }
 
 .add-post-card {
     width: 100%;
-    max-width: 600px;
-    background: white;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 700px;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 3rem;
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.85);
 }
 
 .add-post-card:hover {
@@ -1936,164 +1999,37 @@ body {
 
 .add-post-title {
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 28px;
-    font-weight: 600;
-    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--dark);
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     position: relative;
-    word-wrap: break-word; /* Дозволяє переносити довгі слова */
-    overflow-wrap: break-word; /* Для сумісності з різними браузерами */
-    max-width: 100%; /* Обмежує ширину тексту */
-    white-space: normal; /* Дозволяє переносити текст на новий рядок */
+    padding-bottom: 1rem;
 }
 
-.divider {
-    height: 2px;
-    background: linear-gradient(to right, transparent, #3498db, transparent);
-    margin-bottom: 30px;
-    opacity: 0.3;
-}
-
-.form-group {
-    position: relative;
-    margin-bottom: 25px;
-}
-
-.form-group.floating label {
+.add-post-title::after {
+    content: '';
     position: absolute;
-    top: 15px;
-    left: 15px;
-    color: #7f8c8d;
-    font-size: 16px;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    background: white;
-    padding: 0 5px;
-}
-
-.form-group.floating .form-control:focus + label,
-.form-group.floating .form-control:not(:placeholder-shown) + label {
-    top: -10px;
-    left: 10px;
-    font-size: 12px;
-    color: #3498db;
-}
-
-.form-control {
-    width: 100%;
-    padding: 15px;
-    font-size: 16px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    background-color: #f9f9f9;
-}
-
-.form-control:focus {
-    border-color: #3498db;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-    background-color: white;
-}
-
-.textarea-control {
-    min-height: 150px;
-    resize: vertical;
-}
-
-.form-error {
-    color: #e74c3c;
-    font-size: 13px;
-    margin-top: 5px;
-    padding-left: 5px;
-}
-
-.btn-submit {
-    width: 100%;
-    padding: 15px;
-    font-size: 16px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.btn-submit:hover {
-    background: linear-gradient(135deg, #2980b9, #1a252f);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
-}
-
-.btn-text {
-    font-weight: 500;
-}
-
-.fas {
-    font-size: 14px;
-}
-
-/* Анімації */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.add-post-card {
-    animation: fadeIn 0.5s ease-out forwards;
-}
-
-/* Адаптація для мобільних */
-@media (max-width: 768px) {
-    .add-post-card {
-        padding: 25px;
-    }
-    
-    .add-post-title {
-        font-size: 24px;
-    }
-    
-    .form-control {
-        padding: 12px;
-    }
-}
-
-.edit-post-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.edit-post-card {
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.edit-post-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #333333;
-    margin-bottom: 1rem;
-    text-align: center;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
 }
 
 .divider {
-    height: 2px;
-    background-color: #e0e0e0;
-    margin-bottom: 1.5rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(67, 97, 238, 0.3), transparent);
+    margin: 2rem 0;
 }
 
-.edit-post-form {
+.add-post-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -2101,75 +2037,269 @@ body {
 
 .form-group {
     position: relative;
+    margin-bottom: 1.5rem;
 }
 
 .form-group.floating label {
     position: absolute;
-    top: 50%;
-    left: 1rem;
-    transform: translateY(-50%);
+    top: 18px;
+    left: 18px;
+    color: var(--gray);
     font-size: 1rem;
-    color: #888888;
-    transition: all 0.2s ease;
     pointer-events: none;
+    transition: var(--transition);
+    background: transparent;
+    padding: 0 5px;
 }
 
-.form-group.floating input:focus + label,
-.form-group.floating textarea:focus + label,
-.form-group.floating input:not(:placeholder-shown) + label,
-.form-group.floating textarea:not(:placeholder-shown) + label {
-    top: -0.5rem;
-    left: 0.8rem;
-    font-size: 0.85rem;
-    color: #555555;
+.form-group.floating .form-control:focus + label,
+.form-group.floating .form-control:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 12px;
+    font-size: 0.8rem;
+    color: var(--primary);
+    background: var(--white);
+    padding: 0 8px;
 }
 
 .form-control {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 1.2rem 1.5rem;
     font-size: 1rem;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    background-color: #ffffff;
-    transition: border-color 0.2s ease;
+    border: 2px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    background-color: rgba(248, 249, 250, 0.7);
+    color: var(--dark);
 }
 
 .form-control:focus {
-    border-color: #007bff;
+    border-color: var(--primary-light);
     outline: none;
+    box-shadow: 0 0 0 4px rgba(76, 201, 240, 0.2);
+    background-color: var(--white);
 }
 
 .textarea-control {
+    min-height: 200px;
     resize: vertical;
-    min-height: 120px;
+    line-height: 1.6;
 }
 
 .form-error {
+    color: var(--secondary);
     font-size: 0.85rem;
-    color: #ff4d4d;
     margin-top: 0.5rem;
+    padding-left: 1rem;
+    font-weight: 500;
 }
 
 .btn-submit {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    gap: 12px;
+    margin-top: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .btn-submit:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(58, 12, 163, 0.3);
 }
 
-.btn-submit i {
-    margin-left: 0.5rem;
-    font-size: 1.2rem;
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.btn-text {
+    font-weight: 600;
+}
+
+.fas {
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.btn-submit:hover .fas {
+    transform: translateX(3px);
+}
+
+/* Анімації */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.add-post-card {
+    animation: fadeInUp 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* Адаптація для мобільних */
+@media (max-width: 768px) {
+    .add-post-container {
+        padding: 1.5rem;
+    }
+    
+    .add-post-card {
+        padding: 2rem;
+    }
+    
+    .add-post-title {
+        font-size: 1.8rem;
+    }
+    
+    .form-control {
+        padding: 1rem;
+    }
+    
+    .btn-submit {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .add-post-card {
+        padding: 1.5rem;
+    }
+    
+    .add-post-title {
+        font-size: 1.5rem;
+    }
+    
+    .form-group.floating label {
+        top: 16px;
+        left: 16px;
+        font-size: 0.9rem;
+    }
+}
+
+:root {
+--primary: #4361ee;
+--primary-light: #4cc9f0;
+--primary-dark: #3a0ca3;
+--secondary: #f72585;
+--dark: #1a1a2e;
+--light: #f8f9fa;
+--white: #ffffff;
+--gray: #6c757d;
+--light-gray: #e9ecef;
+--border-radius: 12px;
+--box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+--transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.edit-post-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.edit-post-card {
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.edit-post-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.edit-post-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    margin: 1rem auto 0;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.divider {
+    height: 1px;
+    margin: 1.5rem 0;
+    background: linear-gradient(to right, 
+    transparent, 
+    rgba(67, 97, 238, 0.2), 
+    transparent);
+}
+
+.edit-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 1.8rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    margin-top: 0.5rem;
+}
+.textarea-control {
+    min-height: 180px;
+}
+
+.form-error {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.btn-submit {
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+  /* Адаптивні відступи */
+@media (max-width: 768px) {
+    .edit-post-container {
+    padding: 0.8rem;
+    }
+    
+    .edit-post-card {
+    padding: 2rem;
+    }
+    
+    .edit-post-form {
+    gap: 1.5rem;
+    }
+}
+@media (max-width: 480px) {
+    .edit-post-card {
+    padding: 1.5rem;
+    }
+    
+    .form-control {
+    padding: 0.9rem 1rem;
+    }
+    
+    .btn-submit {
+    padding: 0.9rem;
+    }
 }

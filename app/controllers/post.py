@@ -100,5 +100,12 @@ class PostController:
     )
         
     @staticmethod
-    def get_not_parsed_posts() -> list[Post]:
-        return Post.query.options(joinedload(Post.author)).filter_by(is_parsed=False).all()
+    def get_paginate_blogs(page=1, per_page=4, is_parsed=False):
+        query = Post.query
+
+        if is_parsed is not None:
+            query = query.filter(Post.is_parsed == is_parsed)
+
+        return query.order_by(Post.create_date.desc()).paginate(
+            page=page, per_page=per_page
+        )
