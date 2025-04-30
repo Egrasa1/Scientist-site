@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="about-page">
+    <section class="about-hero">
+        <div class="hero-content">
+            <h1>Ласкаво просимо до <span>Egrasa</span></h1>
+            <p class="hero-subtitle">Інноваційна платформа для наукового прогресу</p>
+        </div>
+    </section>
+    <div class="about-container">
+        <section class="about-section mission">
+            <h2 class="section-title"><i class="fas fa-bullseye"></i> Наша місія</h2>
+            <div class="section-content">
+                <p>Ми прагнемо створити всесвітній центр наукової співпраці, де дослідники з різних дисциплін можуть:</p>
+                <ul class="styled-list">
+                    <li>Об'єднувати знання та ресурси</li>
+                    <li>Проводити міждисциплінарні дослідження</li>
+                    <li>Поширювати наукові відкриття без обмежень</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="about-section values">
+            <h2 class="section-title"><i class="fas fa-heart"></i> Наші цінності</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🔍</div>
+                    <h3>Прозорість</h3>
+                    <p>Відкритий доступ до методологій та результатів досліджень</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Співпраця</h3>
+                    <p>Міжнародна та міждисциплінарна взаємодія,кожен може ділитися/дивитися актуальні новини на нашому сайті </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h3>Інновації</h3>
+                    <p>Підтримка революційних наукових ідей, в тебе є ідея?То поділись нею на нашому сайті</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section activities">
+            <h2 class="section-title"><i class="fas fa-flask"></i> Напрямки роботи</h2>
+            <div class="activity-tabs">
+                <div class="tab active" data-tab="fundamental">Фундаментальні дослідження</div>
+                <div class="tab" data-tab="applied">Прикладні науки</div>
+                <div class="tab" data-tab="education">Наукова освіта</div>
+            </div>
+            <div class="tab-content active" id="fundamental">
+                <p>Підтримка теоретичних досліджень у фізиці, математиці, хімії та інших фундаментальних науках.</p>
+            </div>
+            <div class="tab-content" id="applied">
+                <p>Розробка технологічних рішень у біотехнологіях, інформаційних технологіях та інженерії.</p>
+            </div>
+            <div class="tab-content" id="education">
+                <p>Організація наукових шкіл, онлайн-курсів та міжнародних обмінів.</p>
+            </div>
+        </section>
+</div>
+<script>
+
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+
+            tab.classList.add('active');
+            document.getElementById(tab.dataset.tab).classList.add('active');
+        });
+    });
+</script>
+</div>
+{% endblock %}
