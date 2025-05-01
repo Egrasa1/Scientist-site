@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="contacts-container">
+    <h1 class="contacts-header">Наша команда</h1>
+    <p class="contacts-subheader">Зустрічайте ключових учасників проекту Egrasa</p>
+
+    <div class="team-members">
+        <!-- Учасник 1 -->
+        <div class="member-card">
+            <div class="photo-frame">
+                <img src="/static/images/illya.jfif" alt="Ілля" class="member-photo">
+            </div>
+            <div class="member-info">
+                <h3>Ілля</h3>
+                <p class="position">Наш backend розробник</p>
+                <p class="bio">Він зробив дуже багато гарної роботи як з backend'ом так і з frontend'ом</p>
+                <div class="contact-links">
+                    <a href="https://t.me/IllyaDD" class="contact-link">🔗 Телеграм контакт</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Учасник 2 -->
+        <div class="member-card">
+            <div class="photo-frame">
+                <img src="/static/images/vlad.jfif" alt="Влад" class="member-photo">
+            </div>
+            <div class="member-info">
+                <h3>Влад</h3>
+                <p class="position">Технічний директор,він зробив парсер та деякі частини frontend</p>
+                <p class="bio">Фахівець з машинного навчання та аналізу даних</p>
+                <div class="contact-links">
+                    <a href="https://t.me/svatoi0_0" class="contact-link">🔗 Телеграм контакт</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Учасник 3 -->
+        <div class="member-card">
+            <div class="photo-frame">
+                <img src="/static/images/nikodim.jfif" alt="Никодим" class="member-photo">
+            </div>
+            <div class="member-info">
+                <h3>Никодим</h3>
+                <p class="position">Розробник сайту, по більшій частині робив frontend</p>
+                <p class="bio">Зробив те що ви зараз читаєте</p>
+                <div class="contact-links">
+                    <a href="https://t.me/DofamincAll" class="contact-link">🔗 Телеграм контакт</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="general-contact">
+        <h2>Зв'язатися з нами</h2>
+        <p>Для загальних запитів та співпраці:</p>
+        <div class="contact-methods">
+            <p>📧 Email: <a href="mailto:info@egrasa.org">info@egrasa.org</a></p>
+            <p>📞 Телефон: +380 (XX) XXX-XX-XX</p>
+            <p>🏢 Адреса: м. Київ, вул. Хрю хрю, 24</p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

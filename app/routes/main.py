@@ -17,15 +17,10 @@ def index():
     )
 
 
-@main_bp.route("/contacts")
-def contacts():
-    return render_template(
-        "contacts.html", title="Контакти", current_page=request.endpoint
-    )
-
-
-@main_bp.route("/about")
+@main_bp.route('/about')
 def about():
-    return render_template(
-        "about.html", title="Про нас", current_page=request.endpoint
-    )
+    return render_template('user/about.html')
+
+@main_bp.route('/contacts')
+def contacts():
+    return render_template('user/contacts.html')

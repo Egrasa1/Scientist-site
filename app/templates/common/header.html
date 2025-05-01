@@ -27,16 +27,16 @@
             </li>
             <li>
                 <a
-                  href="#"
-                  class="nav-link {{ 'active' if current_page == 'about.index' else '' }}"
+                  href="{{ url_for('main.about') }}"
+                  class="nav-link {{ 'active' if current_page == 'main.about' else '' }}"
                 >
                   Про нас
                 </a>
             </li>
             <li>
                 <a
-                  href="#"
-                  class="nav-link {{ 'active' if current_page == 'contacts.index' else '' }}"
+                  href="{{ url_for('main.contacts') }}"
+                  class="nav-link {{ 'active' if current_page == 'main.contacts' else '' }}"
                 >
                   Контакти
                 </a>
