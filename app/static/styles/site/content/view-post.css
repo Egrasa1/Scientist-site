@@ -1,0 +1,203 @@
+/* ======================
+   View Post Page Styles
+   ====================== */
+   .post-container {
+    --primary: #4361ee;
+    --light-gray: #222;
+    --gray: #666;
+    --light-gray: #f8f9fa;
+    
+    max-width: min(800px, 90vw);
+    margin: clamp(1.5rem, 5vw, 3rem) auto;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.06),
+        0 2px 6px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.post-container:hover {
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Post Actions */
+.post-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+    will-change: transform;
+}
+
+.btn-edit {
+    background-color: rgba(67, 97, 238, 0.08);
+    color: var(--primary);
+    border-color: rgba(67, 97, 238, 0.15);
+}
+
+.btn-edit:hover {
+    background-color: rgba(67, 97, 238, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(67, 97, 238, 0.1);
+}
+
+.btn-delete {
+    background-color: rgba(220, 53, 69, 0.08);
+    color: #dc3545;
+    border-color: rgba(220, 53, 69, 0.15);
+}
+
+.btn-delete:hover {
+    background-color: rgba(220, 53, 69, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(220, 53, 69, 0.1);
+}
+
+/* Post Header */
+.post-header {
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.post-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #00bfff);
+    border-radius: 3px;
+}
+
+.post-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--ligth-gray);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+.post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--ligth-gray);
+    font-size: 0.95rem;
+}
+
+.post-date {
+    color: var(--primary);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Post Image */
+.post-image {
+    margin: 2rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.post-image:hover img {
+    transform: scale(1.02);
+}
+
+/* Post Content */
+.post-content {
+    line-height: 1.9;
+    color: var(--gray);
+    margin-bottom: 2.5rem;
+    font-size: 1.05rem;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(67, 97, 238, 0.3);
+    transition: all 0.2s ease;
+}
+
+.post-content a:hover {
+    border-bottom-style: solid;
+    color: #2a4bd8;
+}
+
+/* Post Footer */
+.post-footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* light-gray Mode Support */
+@media (prefers-color-scheme: light-gray) {
+    .post-container {
+        background: #222;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .post-title,
+    .post-content {
+        color: #f0f0f0;
+    }
+    
+    .post-meta {
+        color: #aaa;
+    }
+    
+    .post-footer {
+        border-top-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .post-actions {
+        justify-content: center;
+    }
+    
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .post-image {
+        margin: 1.5rem 0;
+    }
+}

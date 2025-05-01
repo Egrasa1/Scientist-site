@@ -1,6 +1,7 @@
-__pycache__/
+**/__pycache__/
+*.pyc
 *.env
 .venv/
-instance/test.db
+instance\test.db
 app/services/parser.ipynb
 *.flaskenv

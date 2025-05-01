@@ -50,7 +50,7 @@
                         {% endif %}
                     </div>
                     <h2 class="article-title">
-                        <a href="#">{{ post.tittle }}</a>
+                        <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle, source='news_feed') }}">{{ post.tittle }}</a>
                     </h2>
                 </div>
                 

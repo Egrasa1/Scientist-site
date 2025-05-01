@@ -1,0 +1,199 @@
+/* ======================
+   Base Imports
+   ====================== */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* ======================
+   Component Imports
+   ====================== */
+@import url("posts.css");
+@import url("form.css");
+
+/* ======================
+   Common Components
+   ====================== */
+@import url("common/dropdown-menu.css");
+@import url("common/footer.css");
+@import url("common/header.css");
+
+/* ======================
+   Site Sections
+   ====================== */
+@import url("site/main-page.css");
+@import url("site/about.css");
+@import url("site/contacts.css");
+
+/* ======================
+   User Sections
+   ====================== */
+@import url("site/user/promote.css");
+@import url("site/user/profile.css");
+@import url("site/user/settings.css");
+
+/* ======================
+   Content Sections
+   ====================== */
+@import url("site/content/blog.css");
+@import url("site/content/news-feed.css");
+@import url("site/content/scientific-news.css");
+@import url("site/content/view-post.css");
+
+/* ======================
+   Auth Sections
+   ====================== */
+@import url("site/auth/login-page.css");
+@import url("site/auth/register-page.css");
+
+/* ======================
+   Base Styles
+   ====================== */
+:root {
+    --primary: #4361ee;
+    --primary-light: #4cc9f0;
+    --primary-dark: #3a56d4;
+    --secondary: #3a0ca3;
+    --dark: #1a1a2e;
+    --light: #f8f9fa;
+    --gray: #6c757d;
+    --white: #ffffff;
+    --dark: #e9ecef;
+    --error: #dc3545;
+    
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-xxl: 3rem;
+    
+    /* Border */
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
+    
+    /* Transitions */
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-attachment: fixed;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    color: var(--light-gray);
+    line-height: 1.6;
+}
+
+/* ======================
+   Utility Classes
+   ====================== */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ======================
+   Error Styles
+   ====================== */
+.error-code {
+    color: #cfcbcb;
+    font-size: 5.75rem; /* 92pt converted to rem */
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+}
+  
+.error-description {
+    color: #c7c5c5;
+    font-size: 0.875rem; /* 14pt converted to rem */
+    max-width: 60ch;
+    margin: 0 auto;
+}
+
+/* ======================
+   Empty State
+   ====================== */
+.empty-state {
+    text-align: center;
+    padding: var(--space-xl) var(--space-lg);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: var(--border-radius-lg);
+    max-width: 600px;
+    margin: var(--space-xl) auto;
+    backdrop-filter: blur(5px);
+}
+
+.empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: var(--space-lg);
+    opacity: 0.8;
+    color: var(--primary);
+}
+
+.empty-title {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.empty-text {
+    font-size: 1.1rem;
+    color: var(--gray);
+    line-height: 1.6;
+}
+
+/* ======================
+   Responsive Styles
+   ====================== */
+@media (max-width: 768px) {
+    .error-code {
+        font-size: 4rem;
+    }
+    
+    .empty-state {
+        padding: var(--space-lg) var(--space-md);
+        margin: var(--space-lg) auto;
+    }
+    
+    .empty-icon {
+        font-size: 2.5rem;
+        margin-bottom: var(--space-md);
+    }
+    
+    .empty-title {
+        font-size: 1.5rem;
+    }
+    
+    .empty-text {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
+}

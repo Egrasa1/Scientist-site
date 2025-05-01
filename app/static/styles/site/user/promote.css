@@ -1,0 +1,114 @@
+/* ======================
+   Promote Page Styles
+   ====================== */
+   .promote-container {
+    max-width: min(600px, 90vw);
+    margin: 2.5rem auto;
+    padding: clamp(1.5rem, 5vw, 2rem);
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.08),
+        0 4px 8px rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.promote-container:hover {
+    box-shadow: 
+        0 16px 32px rgba(0, 0, 0, 0.12),
+        0 6px 12px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
+}
+
+.promote-container h1 {
+    font-size: clamp(1.5rem, 5vw, 1.75rem);
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: #222;
+    line-height: 1.3;
+    position: relative;
+    display: inline-block;
+}
+
+.promote-container h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #007bff, #00bfff);
+    border-radius: 3px;
+}
+
+/* Form Styles */
+.promote-form .form-group {
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+
+.promote-form .form-label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.promote-form .form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.promote-form .form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    background-color: #fff;
+}
+
+.promote-form .btn-primary {
+    width: 100%;
+    padding: 0.875rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #007bff, #00a1ff);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.promote-form .btn-primary:hover {
+    background: linear-gradient(135deg, #0069d9, #0088cc);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.promote-form .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .promote-container {
+        margin: 1.5rem auto;
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+    
+    .promote-form .form-control {
+        padding: 0.625rem 0.875rem;
+    }
+}

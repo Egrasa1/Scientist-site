@@ -1,0 +1,120 @@
+/* ======================
+   Form Styles
+   ====================== */
+
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group.floating label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: var(--gray);
+    pointer-events: none;
+    transition: var(--transition);
+    font-size: 15px;
+}
+
+.form-group.floating .form-control:focus ~ label,
+.form-group.floating .form-control:focus-visible ~ label,
+.form-group.floating .form-control:not(:placeholder-shown) ~ label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    background: white;
+    padding: 0 5px;
+    color: var(--primary);
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px 45px 15px 15px;
+    font-size: 15px;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    background-color: white;
+    color: var(--light-gray);
+}
+
+.form-control:focus,
+.form-control:focus-visible {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.form-icon {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    color: var(--gray);
+    pointer-events: none;
+}
+
+.form-icon.right {
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.form-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.form-group.floating .form-control:focus ~ .form-icon,
+.form-group.floating .form-control:focus-visible ~ .form-icon,
+.form-group.floating .form-control:not(:placeholder-shown) ~ .form-icon {
+    color: var(--primary);
+}
+
+.form-actions {
+    margin-top: 30px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    will-change: transform, box-shadow;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-light-gray);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(67, 97, 238, 0.2);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-primary svg {
+    width: 18px;
+    height: 18px;
+    margin-left: 8px;
+    transition: var(--transition);
+}
+
+.btn-primary:hover svg {
+    transform: translateX(3px);
+}

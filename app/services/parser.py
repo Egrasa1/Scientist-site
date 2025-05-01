@@ -6,6 +6,8 @@ import logging
 from requests.exceptions import RequestException, HTTPError
 from bs4 import BeautifulSoup
 
+from app.controllers import PostController
+
 
 def parser_science_news():
     logger = logging.getLogger(__name__)
@@ -76,6 +78,15 @@ def parser_science_news():
             if not post_info:
                 logging.error(f"Не вдалося получити інформацію про статью: {href}")
                 break
+            
+            post_title_inf = post_info.select_one(".post-title")
+            post_title = post_title_inf.find("h1")
+            post_title_text = post_title.get_text(strip=True)
+            
+            existing_post = PostController.get_post_by_tittle(post_title_text)
+            if existing_post:
+                logging.info("Пост було пропущенно")
+                continue
 
             post_rating_text = post_info.select_one(".post-raitng")
             post_rating = post_rating_text.text if post_rating_text else ""
@@ -93,8 +104,6 @@ def parser_science_news():
                 logger.debug(f"Відсортировка новин за рейтингов: {rating_score}")
 
                 post_body_description = soup.find("div", class_="body")
-                post_title_inf = post_info.select_one(".post-title")
-                post_title = post_title_inf.find("h1")
                 post_lead = post_info.select_one(".post-lead")
 
                 paragraphs = (

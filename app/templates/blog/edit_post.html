@@ -1,3 +1,39 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
 
+{% block content %}
+<div class="edit-post-container">
+    <div class="edit-post-card">
+        <h1 class="edit-post-title">Редагувати пост</h1>
+        <div class="divider"></div>
+        
+        <form action="{{ form_action }}" method="POST" class="edit-post-form">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group floating">
+                {{ form.title(class="form-control", id="title", placeholder=" ", value=post.tittle) }}
+                <label for="title">Заголовок (поточний: {{ post.tittle }})</label>
+                {% if form.title.errors %}
+                <div class="form-error">
+                    {{ form.title.errors[0] }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group floating">
+                {{ form.content(class="form-control textarea-control", id="content", placeholder=" ", rows="6") }}
+                <label for="content">Контент поста</label>
+                {% if form.content.errors %}
+                <div class="form-error">
+                    {{ form.content.errors[0] }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-submit">
+                <span class="btn-text">Зберегти зміни</span>
+                <i class="fas fa-save"></i>
+            </button>
+        </form>
+    </div>
+</div>
 {% endblock %}

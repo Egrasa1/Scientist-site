@@ -5,7 +5,6 @@ import logging
 
 from app.controllers import savef_news
 from app import create_app, db, models
-from app.controllers import UserController
 
 
 app = create_app()

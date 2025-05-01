@@ -1,0 +1,213 @@
+/* ======================
+   Contacts Page Styles
+   ====================== */
+
+/* Main Container */
+.contacts-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-light-gray);
+}
+
+/* Header Section */
+.contacts-header {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.contacts-subheader {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    text-align: center;
+    color: var(--text-gray);
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Team Members Grid */
+.team-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Member Card */
+.member-card {
+    background: var(--white);
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.member-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Photo Frame */
+.photo-frame {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+    padding: 4px;
+    background: var(--white);
+    box-shadow: var(--shadow-primary);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.member-card:hover .photo-frame {
+    border-color: var(--primary-light);
+    transform: scale(1.03);
+}
+
+.member-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Member Info */
+.member-info {
+    padding: 0 1rem;
+    text-align: center;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.member-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.position {
+    color: var(--text-gray);
+    font-style: italic;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.bio {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+/* Contact Links */
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: auto;
+    flex-wrap: wrap;
+}
+
+.contact-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius-lg);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contact-link:hover {
+    color: var(--white);
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* General Contact Section */
+.general-contact {
+    background: var(--bg-light);
+    padding: 2rem;
+    border-radius: var(--border-radius-sm);
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.general-contact h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.contact-methods {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-methods p {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .team-members {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-frame {
+        width: 160px;
+        height: 160px;
+    }
+
+    .general-contact {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacts-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .photo-frame {
+        width: 140px;
+        height: 140px;
+    }
+
+    .contact-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .contact-link {
+        width: 100%;
+        justify-content: center;
+    }
+}

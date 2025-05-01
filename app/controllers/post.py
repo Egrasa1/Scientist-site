@@ -1,6 +1,6 @@
 from datetime import datetime
-
-# from sqlalchemy.orm import Session
+import logging
+from sqlalchemy.orm import joinedload
 from app.models import User, Post  # Для перевірки зв'язків
 
 
@@ -30,7 +30,7 @@ class PostController:
         return Post.query.filter(Post.user_id == user_id, Post.is_parsed == False).all()
 
     @staticmethod
-    def get_paginate_posts(page=1, per_page=8, is_parsed=True):
+    def get_paginate_posts(page=1, per_page=9, is_parsed=True):
         query = Post.query
 
         if is_parsed is not None:
@@ -67,8 +67,8 @@ class PostController:
         if post:
             post.tittle = title
             post.content = content
-            Post.save()
-            Post.refresh()
+            post.save()
+            post.refresh()
         return post
 
     @staticmethod
@@ -85,7 +85,9 @@ class PostController:
         post = Post.query.filter(Post.id == post_id).first()
         if post:
             post.delete()
+            logging.info(f"Пост із ID {post_id} видалено.")
             return True
+        logging.warning(f"Пост із ID {post_id} не знайдено.")
         return False
 
     @staticmethod
@@ -98,5 +100,12 @@ class PostController:
     )
         
     @staticmethod
-    def get_not_parsed_posts() -> list[Post]:
-        return Post.query.filter_by(is_parsed=False).all()
+    def get_paginate_blogs(page=1, per_page=4, is_parsed=False):
+        query = Post.query
+
+        if is_parsed is not None:
+            query = query.filter(Post.is_parsed == is_parsed)
+
+        return query.order_by(Post.create_date.desc()).paginate(
+            page=page, per_page=per_page
+        )

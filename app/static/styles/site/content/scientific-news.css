@@ -1,0 +1,183 @@
+/* ======================
+   Scientific News Page Styles
+   ====================== */
+
+/* Search Form */
+.search-form {
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    position: relative;
+}
+
+.search-group {
+    display: flex;
+    max-width: min(600px, 90vw);
+    margin: 0 auto;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 
+        0 6px 18px rgba(0, 0, 0, 0.08),
+        0 2px 4px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.search-group:focus-within {
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.12),
+        0 0 0 2px var(--primary-light);
+    transform: translateY(-1px);
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: clamp(0.75rem, 2vw, 1rem) 1.5rem;
+    border: none;
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    background: #fff;
+    color: var(--light-gray);
+}
+
+.search-input::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+.search-input:focus {
+    outline: none;
+    background: #fefeff;
+}
+
+.search-button {
+    background: linear-gradient(135deg, var(--primary));
+    color: white;
+    border: none;
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.search-button:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #1a3ac2);
+}
+
+.search-button svg {
+    width: 1.1em;
+    height: 1.1em;
+}
+
+/* Search Results */
+.search-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.search-results-header h3 {
+    color: var(--light-gray);
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    margin: 0;
+}
+
+.clear-search {
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 0.5em 1em;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.clear-search:hover {
+    background: rgba(67, 97, 238, 0.2);
+    text-decoration: none;
+}
+
+/* Pagination */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+}
+
+.page-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: white;
+    border-radius: 8px;
+    color: var(--dark);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.page-link:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}
+
+.current-page {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--primary);
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+}
+
+.ellipsis {
+    padding: 0.5rem;
+}
+
+/* light-gray Mode Support */
+@media (prefers-color-scheme: light-gray) {
+    .search-input {
+        background: #2a2a2a;
+        color: #f0f0f0;
+    }
+    
+    .search-input::placeholder {
+        color: #aaa;
+    }
+    
+    .search-results-header h3 {
+        color: #f0f0f0;
+    }
+    
+    .page-link {
+        background: #333;
+        color: #f0f0f0;
+    }
+    
+    .clear-search {
+        background: rgba(67, 97, 238, 0.15);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .search-group {
+        border-radius: var(--border-radius);
+    }
+    
+    .search-button span {
+        display: none;
+    }
+    
+    .search-button {
+        padding: 0 1rem;
+    }
+}

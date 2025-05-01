@@ -1,6 +1,6 @@
 import logging
 
-from flask import Blueprint, request, url_for, render_template, redirect, jsonify
+from flask import Blueprint, request, url_for, render_template, redirect, jsonify, flash
 from flask_login import current_user
 
 from app.forms import BlogForm, SearchForm
@@ -42,6 +42,21 @@ def news_feed():
         posts=posts, 
         pagination=pagination
     )
+    
+    
+@content_bp.route('/blog', methods=['GET'])
+def blog(): 
+    page = request.args.get('page', 1, type=int)  # Отримуємо номер сторінки
+    pagination = PostController.get_paginate_blogs(page=page, per_page=4, is_parsed=False)  # Отримуємо об'єкт пагінації
+    posts = pagination.items  # Отримуємо список постів для поточної сторінки
+
+    return render_template(
+        'blog/index.html',
+        title='Блог',
+        posts=posts,
+        pagination=pagination,  # Передаємо об'єкт пагінації в шаблон
+        current_page=request.endpoint
+    )
 
 @content_bp.route("/blog/post", methods=['GET', 'POST'])
 def add_post():
@@ -73,20 +88,18 @@ def add_post():
         return jsonify({'error': str(e)}), 400
     
     
-@content_bp.route("/post/<int:post_id>", methods=["GET", "POST"])
+@content_bp.route("/post/delete/<int:post_id>/<post_title>", methods=["GET", "POST"])
 def delete_post(post_id, post_title):
     post = PostController.get_post_by_id(post_id)
 
-    if not post or current_user.id != post.user_id:
-        return redirect(url_for("main.index"), code=303)
+    if not post or (current_user.id != post.user_id and not UserController.check_user_is_admin(current_user.id)):
+        flash("Постав вже нема або ви не адміни/власник поста")
+        return redirect(url_for("content.blog"), code=303)
+    else:
+        PostController.delete_post(post_id) 
+        flash(f"Пост було видалено: '{post_title}'")
 
-    PostController.delete_post(post_id)
-    logging.info(f"Пост було видаленно: {post_title}")
-
-    return redirect(url_for("content.index"), code=303)
-
-
-
+    return redirect(url_for("main.index"), code=303)
 
 @content_bp.route("/post/<post_id>/<post_title>", methods=['GET', 'POST'])
 def view_post(post_id, post_title):
@@ -102,7 +115,7 @@ def view_post(post_id, post_title):
             user=user,
             post_create_date=post.create_date.strftime("%d.%m.%Y"),
             source=source
-            )
+        )
     else:
         return redirect(url_for("blog.index"))
     
@@ -111,30 +124,28 @@ def view_post(post_id, post_title):
 def edit_post(post_id, post_title):
     post = PostController.get_post_by_id(post_id)
     if not post:
-        return redirect(url_for("blog.index"))
+        return redirect(url_for("content.index"))
 
     form = BlogForm(obj=post)
     if form.validate_on_submit():
-            PostController.update_post(post_id, form.title.data, form.content.data)
-            return redirect(url_for("blog.view_post", post_title=post.title, post_id=post_id))
+        PostController.update_post(post_id, form.title.data, form.content.data)
+        return redirect(url_for("content.view_post", post_title=form.title.data, post_id=post_id))
     elif form.is_submitted():
-    
         return render_template(
+            "blog/edit_post.html", 
+            title="Редагувати пост", 
+            current_page=request.endpoint, 
+            form=form,
+            post=post,  
+            form_action=url_for("content.edit_post", post_id=post_id, post_title=post_title)
+        )
+    return render_template(
         "blog/edit_post.html", 
         title="Редагувати пост", 
         current_page=request.endpoint, 
         form=form,
-        form_action=url_for("blog.edit_post", post_id=post_id, post_title=post_title)
+        post=post,  
+        form_action=url_for("content.edit_post", post_id=post_id, post_title=post_title)
     )
-        
-        
-        
-@content_bp.route('/blog', methods=['GET', 'POST'])
-def blog():
-    posts =PostController.get_not_parsed_posts()
-    return render_template(
-        'blog/index.html',
-        title='Блог',
-        posts=posts,
-        current_page=request.endpoint
-    )
+
+
