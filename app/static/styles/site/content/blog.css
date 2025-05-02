@@ -232,7 +232,7 @@
 }
 
 .add-post-btn-container {
-    margin-left: calc(-6 * clamp(1rem, 3vw, 2rem)); /* Компенсує padding батьківського контейнера */
+    margin-left: calc(-6.5 * clamp(1rem, 3vw, 2rem)); /* Компенсує padding батьківського контейнера */
     width: calc(100% + clamp(1rem, 3vw, 2rem));
 }
 

@@ -9,7 +9,7 @@
     }
     
     .edit-post-container {
-        max-width: 680px; /* Increased from 580px */
+        max-width: 700px;
         margin: 3rem auto;
         padding: 2rem;
         background: white;
@@ -158,7 +158,7 @@
     }
     
     .textarea-control {
-        min-height: 180px; /* Increased from 150px */
+        min-height: 180px;
         resize: vertical;
         line-height: 1.6;
     }
@@ -300,14 +300,14 @@
     }
     
     /* Responsive Design */
-    @media (max-width: 768px) {
+    @media (max-width: 2300px) { /* Змінено з 768px */
         .edit-post-container {
             max-width: 90%;
             margin: 2rem auto;
         }
     }
     
-    @media (max-width: 640px) {
+    @media (max-width: 1920px) { /* Змінено з 640px */
         .edit-post-container {
             margin: 1.5rem auto;
             padding: 1.5rem;
@@ -328,7 +328,7 @@
         }
     }
     
-    @media (max-width: 480px) {
+    @media (max-width: 1440px) { /* Змінено з 480px */
         .edit-post-container {
             padding: 1.25rem;
             margin: 1rem auto;
