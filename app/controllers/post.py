@@ -58,7 +58,7 @@ class PostController:
         return results
 
     @staticmethod
-    def get_post_by_rating(limit: int = 3) -> list[Post]:
+    def get_post_by_rating(limit: int = 4) -> list[Post]:
         return Post.query.filter_by(rating="🔥🔥Варто переглянути🔥🔥").order_by(Post.create_date.desc()).limit(limit).all()
 
     @staticmethod
