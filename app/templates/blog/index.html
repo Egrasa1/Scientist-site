@@ -3,6 +3,14 @@
 {% block content %}
 <div class="blog-container">
     <div class="blog-header {% if not posts %}centered{% endif %}">
+        {% if posts %}
+        <div class="add-post-btn-container">
+            <a href="{{ url_for('content.add_post') }}" class="add-post-btn">
+                <i class="fas fa-plus"></i>
+                Додати пост
+            </a>
+        </div>
+        {% endif %}
         <h1 class="blog-title">Блоги користувачів</h1>
     </div>
 
@@ -41,18 +49,18 @@
 
     <!-- Пагінація -->
     {% if pagination and pagination.pages > 1 %}
-<div class="pagination">
-    {% if pagination.has_prev %}
-    <a href="{{ url_for('content.blog', page=pagination.prev_num) }}" class="btn btn-secondary">Попередня</a>
-    {% endif %}
+    <div class="pagination">
+        {% if pagination.has_prev %}
+        <a href="{{ url_for('content.blog', page=pagination.prev_num) }}" class="btn btn-secondary">Попередня</a>
+        {% endif %}
 
-    <span>Сторінка {{ pagination.page }} із {{ pagination.pages }}</span>
+        <span>Сторінка {{ pagination.page }} із {{ pagination.pages }}</span>
 
-    {% if pagination.has_next %}
-    <a href="{{ url_for('content.blog', page=pagination.next_num) }}" class="btn btn-secondary">Наступна</a>
+        {% if pagination.has_next %}
+        <a href="{{ url_for('content.blog', page=pagination.next_num) }}" class="btn btn-secondary">Наступна</a>
+        {% endif %}
+    </div>
     {% endif %}
-</div>
-{% endif %}
     {% else %}
     <div class="empty-state">
         <div class="empty-icon">

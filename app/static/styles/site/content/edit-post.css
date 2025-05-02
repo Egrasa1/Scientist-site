@@ -1,220 +1,346 @@
 /* ======================
-   Edit Page Styles
-   ====================== */
+    Edit Page Styles
+    ====================== */
 
-.edit-post-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem;
-}
-
-.edit-post-card {
-    padding: 2.5rem;
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--box-shadow-lg);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-}
-
-.edit-post-card:hover {
-    box-shadow: var(--box-shadow-xl);
-}
-
-.edit-post-header {
-    margin-bottom: 1rem;
-}
-
-.edit-post-title {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
-    color: var(--dark);
-    font-weight: 600;
-}
-
-.edit-post-title::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    margin: 1rem auto 1.5rem;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    border-radius: 2px;
-}
-
-.edit-post-meta {
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.approval-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background-color: rgba(40, 167, 69, 0.1);
-    color: var(--success);
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.approval-badge i {
-    font-size: 1.1rem;
-}
-
-.divider {
-    height: 1px;
-    margin: 1.5rem 0;
-    background: linear-gradient(to right, 
-        transparent, 
-        rgba(67, 97, 238, 0.3), 
-        transparent);
-}
-
-.edit-post-form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.form-group.floating {
-    position: relative;
-    margin-bottom: 1.5rem;
-}
-
-.form-control {
-    padding: 1.2rem 1.5rem;
-    font-size: 1rem;
-    border: 1px solid var(--light-gray);
-    border-radius: var(--border-radius);
-    transition: all 0.3s ease;
-    background-color: var(--light-bg);
-}
-
-.form-control:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.2);
-    background-color: white;
-}
-
-.textarea-control {
-    min-height: 200px;
-    resize: vertical;
-}
-
-.form-group.floating label {
-    position: absolute;
-    top: 1.2rem;
-    left: 1.5rem;
-    color: var(--gray);
-    pointer-events: none;
-    transition: all 0.3s ease;
-    background-color: transparent;
-    padding: 0 0.3rem;
-}
-
-.form-group.floating .form-control:focus ~ label,
-.form-group.floating .form-control:not(:placeholder-shown) ~ label {
-    top: -0.6rem;
-    left: 1rem;
-    font-size: 0.8rem;
-    background-color: white;
-    color: var(--primary);
-}
-
-.form-error {
-    color: var(--danger);
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 1rem 1.8rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-}
-
-.btn-submit {
-    background-color: var(--primary);
-    color: white;
-}
-
-.btn-submit:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--box-shadow-sm);
-}
-
-.btn-cancel {
-    background-color: var(--light-bg);
-    color: var(--gray);
-}
-
-.btn-cancel:hover {
-    background-color: var(--light-gray);
-    color: var(--dark);
-}
-
-.btn i {
-    font-size: 1.1rem;
-}
-
-@media (max-width: 768px) {
+    body {
+        background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+        min-height: 100vh;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
     .edit-post-container {
-        padding: 0.8rem;
-    }
-    
-    .edit-post-card {
+        max-width: 680px; /* Increased from 580px */
+        margin: 3rem auto;
         padding: 2rem;
+        background: white;
+        border-radius: 24px;
+        box-shadow: 
+            0 12px 24px rgba(67, 97, 238, 0.1),
+            0 4px 12px rgba(67, 97, 238, 0.06);
+        border: 1px solid rgba(67, 97, 238, 0.1);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
-    .edit-post-form {
-        gap: 1.5rem;
+    .edit-post-container:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+            0 16px 32px rgba(67, 97, 238, 0.15),
+            0 6px 16px rgba(67, 97, 238, 0.1);
     }
     
-    .form-actions {
-        flex-direction: column;
+    .edit-post-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, #4361ee, #3a0ca3, #7209b7);
+        animation: gradientFlow 8s ease infinite;
+        background-size: 200% 200%;
     }
     
-    .btn {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
     .edit-post-card {
-        padding: 1.5rem;
+        background: transparent;
+        padding: 1.5rem 0;
+    }
+    
+    .edit-post-header {
+        margin-bottom: 2rem;
+        text-align: center;
     }
     
     .edit-post-title {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        color: #1a1a2e;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        position: relative;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+    
+    .edit-post-title:hover {
+        transform: scale(1.02);
+    }
+    
+    .edit-post-title::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        margin: 1.2rem auto 0;
+        background: linear-gradient(90deg, #4361ee, #3a0ca3);
+        border-radius: 4px;
+        opacity: 0.8;
+        transition: width 0.3s ease;
+    }
+    
+    .edit-post-title:hover::after {
+        width: 100px;
+    }
+    
+    .edit-post-meta {
+        margin-bottom: 2rem;
+    }
+    
+    .approval-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.6rem 1.2rem;
+        background: rgba(40, 167, 69, 0.12);
+        color: #28a745;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(40, 167, 69, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .approval-badge:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+    }
+    
+    .approval-badge i {
+        font-size: 1.1rem;
+    }
+    
+    .divider {
+        height: 1px;
+        margin: 2rem 0;
+        background: linear-gradient(90deg, transparent, rgba(67, 97, 238, 0.2), transparent);
+        transition: all 0.3s ease;
+    }
+    
+    .edit-post-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-weight: 600;
+        color: #4a5568;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
     }
     
     .form-control {
+        width: 100%;
         padding: 1rem 1.2rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        background: #f8fafc;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        color: #1a202c;
+    }
+    
+    .form-control:focus {
+        border-color: #4361ee;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+        outline: none;
+        transform: translateY(-2px);
+    }
+    
+    .textarea-control {
+        min-height: 180px; /* Increased from 150px */
+        resize: vertical;
+        line-height: 1.6;
+    }
+    
+    .form-error {
+        color: #e53e3e;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        animation: shake 0.5s ease;
+    }
+    
+    .form-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1.2rem;
+        margin-top: 2rem;
     }
     
     .btn {
-        padding: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: none;
+        position: relative;
+        overflow: hidden;
     }
-}
+    
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .btn:hover::before {
+        opacity: 1;
+    }
+    
+    .btn-submit {
+        background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        color: white;
+        box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+    }
+    
+    .btn-submit:hover {
+        background: linear-gradient(135deg, #3a0ca3, #4361ee);
+        box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
+        transform: translateY(-3px);
+    }
+    
+    .btn-cancel {
+        background: white;
+        color: #4a5568;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-cancel:hover {
+        background: #f7fafc;
+        border-color: #cbd5e0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        color: #2d3748;
+        transform: translateY(-2px);
+    }
+    
+    .btn i {
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .btn:hover i {
+        transform: scale(1.1);
+    }
+    
+    /* Floating labels */
+    .form-group.floating {
+        position: relative;
+        margin-top: 1.5rem;
+    }
+    
+    .form-group.floating label {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        color: #718096;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        background: white;
+        padding: 0 0.5rem;
+        border-radius: 4px;
+        font-size: 1rem;
+        transform-origin: left center;
+    }
+    
+    .form-group.floating .form-control:focus ~ label,
+    .form-group.floating .form-control:not(:placeholder-shown) ~ label {
+        transform: translateY(-1.8rem) scale(0.85);
+        color: #4361ee;
+        font-weight: 600;
+        background: linear-gradient(180deg, white 50%, #f8fafc 50%);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+        20%, 40%, 60%, 80% { transform: translateX(3px); }
+    }
+    
+    .edit-post-card {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .edit-post-container {
+            max-width: 90%;
+            margin: 2rem auto;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .edit-post-container {
+            margin: 1.5rem auto;
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+        
+        .edit-post-title {
+            font-size: 1.8rem;
+        }
+        
+        .form-actions {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .btn {
+            width: 100%;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .edit-post-container {
+            padding: 1.25rem;
+            margin: 1rem auto;
+            border-radius: 12px;
+        }
+        
+        .edit-post-title {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-control {
+            padding: 0.9rem 1.1rem;
+        }
+    }
