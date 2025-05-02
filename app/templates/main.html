@@ -1,41 +1,46 @@
-{% extends "base.html" %} {% block content %}
-<div class="main-hero">
-    <div class="hero-content">
-        <h1 class="hero-title">Наукові новини</h1>
-        <p class="hero-subtitle">Свіжі дослідження та відкриття з усього світу</p>
-    </div>
-</div>
+{% extends "base.html" %}
 
+{% block content %}
 <div class="main-container">
-    <!-- <div class="main-background">
-    </div> -->
+    <h1 class="page-title">🔥 Свіжі дослідження та відкриття з усього світу 🔥</h1>
+
     {% if not hot_posts %}
-    <div class="empty-state">
-        <div class="empty-icon">(ᗒᗣᗕ)՞</div>
-        <h2 class="empty-title">WOOOOPS</h2>
-        <p class="empty-text">А нема...нема)) Горячих~ новин поки що нема</p>
-    </div>
-    {% else %}
-    <div class="news-grid">
-        {% for post in hot_posts | sort(attribute="create_date") %}
-        <div class="news-card">
-            <div class="card-image-container">
-                <img src="{{ post.image_url }}" alt="{{ post.tittle }}" class="card-image">
-            </div>
-            <div class="card-body">
-                <h3 class="card-title"> 🔥 🔥 {{ post.tittle }} 🔥 🔥</h3>
-                <p class="card-text">{{ post.content|truncate(120) }}</p>
-                <div class="card-footer">
-                    <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle) }}" class="read-more">
-                        Детальніше 
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <span class="card-date">{{ post.create_date.strftime('%d.%m.%Y') }}</span>
-                </div>
-            </div>
+        <div class="empty-state">
+            <div class="empty-icon">(ᗒᗣᗕ)՞</div>
+            <h2 class="empty-title">WOOOOPS</h2>
+            <p class="empty-text">А нема...нема)) Горячих~ новин поки що нема</p>
         </div>
-        {% endfor %}
-    </div>
+    {% else %}
+        <div class="news-feed">
+            {% for post in hot_posts | sort(attribute="create_date", reverse=True) %}
+            <article class="news-article">
+                <div class="article-header">
+                    <div class="article-meta">
+                        <span class="article-date">{{ post.create_date.strftime('%d.%m.%Y') }}</span>
+                        <span class="article-rating">{{ post.rating }}</span>
+                    </div>
+                    <h2 class="article-title">
+                        <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle, source='main') }}">
+                            {{ post.tittle }}
+                        </a>
+                    </h2>
+                </div>
+
+                {% if post.image_url %}
+                <div class="article-image">
+                    <img src="{{ post.image_url }}" alt="{{ post.tittle }}" loading="lazy">
+                </div>
+                {% endif %}
+
+                <div class="article-content">
+                    <p class="article-excerpt">{{ post.content|truncate(200) }}</p>
+                    <a href="{{ url_for('content.view_post', post_id=post.id, post_title=post.tittle, source='main') }}" class="read-more">
+                        Читати далі
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
     {% endif %}
 </div>
 {% endblock %}
