@@ -1,6 +1,6 @@
 import random
+
 from flask import Blueprint, render_template, request
-from app.services.parser import parser_science_news
 from app.controllers import PostController
 
 main_bp = Blueprint("main", __name__)
@@ -10,9 +10,9 @@ main_bp = Blueprint("main", __name__)
 def index():
     hot_posts = PostController.get_post_by_rating()
 
-    random_hot_posts = random.sample(hot_posts, 4)
+    # random_hot_posts = random.sample(hot_posts, 3)
 
-    return render_template("main.html", hot_posts=random_hot_posts)
+    return render_template("main.html", hot_posts=hot_posts)
 
 
 @main_bp.route('/about')
